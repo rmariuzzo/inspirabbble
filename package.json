@@ -1,0 +1,32 @@
+{
+  "name": "inspirabbble",
+  "version": "1.0.0",
+  "description": "Inspire yourself with fresh shots from Dribbble",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mariuzzo/inspirabbble.git"
+  },
+  "keywords": [
+    "inspiration",
+    "dribbble"
+  ],
+  "author": "rmariuzzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mariuzzo/inspirabbble/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "load-grunt-tasks": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-sass": "~0.10.0",
+    "grunt-contrib-imagemin": "~0.5.0",
+    "grunt-targethtml": "~0.2.6"
+  }
+}
