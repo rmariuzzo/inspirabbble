@@ -18,5 +18,11 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "almond": "~0.2.9"
+  },
+  "dependencies": {
+    "angular": "~1.2.12"
+  }
 }
