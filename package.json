@@ -18,5 +18,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mariuzzo/inspirabbble/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2"
   }
 }
