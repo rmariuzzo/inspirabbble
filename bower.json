@@ -20,7 +20,8 @@
     "tests"
   ],
   "devDependencies": {
-    "almond": "~0.2.9"
+    "almond": "~0.2.9",
+    "requirejs": "~2.1.10"
   },
   "dependencies": {
     "angular": "~1.2.12"

@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--(if target server)><!-->
+    <script data-main="assets/js/main" src="assets/bower_components/requirejs/require.js"></script>
+    <!--<!(endif)-->
+    <!--(if target build)>
+    <script src="assets/js/main.js"></script>
+    <!(endif)-->
+</head>
+<body>
+    <div>
+        <input type="text" ng-model="name" placeholder="Type a name...">
+        <hr>
+        <h1>Hello {{name}}</h1>
+    </div>
+</body>
+</html>

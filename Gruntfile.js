@@ -8,11 +8,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         watch: {
             server: {
-                options: {
-                    livereload: true
-                },
-                files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*'],
-                tasks: ['jshint', 'sass:server']
+                files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
+                tasks: ['jshint', 'sass:server', 'targethtml:server']
             }
         },
         /* jshint camelcase: false */
@@ -81,10 +78,22 @@ module.exports = function(grunt) {
                     dest: './',
                 }]
             }
+        },
+        targethtml: {
+            server: {
+                files: {
+                    'index.html': 'views/index.html'
+                }
+            },
+            build: {
+                files: {
+                    'index.html': 'views/index.html'
+                }
+            }
         }
     });
 
-    grunt.registerTask('server', ['jshint', 'sass:server', 'watch:server']);
-    grunt.registerTask('build', ['jshint', 'requirejs', 'sass:build', 'imagemin']);
+    grunt.registerTask('server', ['jshint', 'sass:server', 'targethtml:server', 'watch:server']);
+    grunt.registerTask('build', ['jshint', 'requirejs', 'sass:build', 'targethtml:build', 'imagemin']);
     grunt.registerTask('default', ['server']);
 };
