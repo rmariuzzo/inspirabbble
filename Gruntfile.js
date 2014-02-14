@@ -25,7 +25,6 @@ module.exports = function(grunt) {
             files: ['Gruntfile.js', 'assets/js/**/*.js'],
             options: {
                 jshintrc: '.jshintrc'
-                // ignores: ['assets/js/vendor/modernizr.js', 'assets/js/vendor/oo_engine.min.js', 'assets/js/vendor/oo_conf.js']
             }
         },
         requirejs: {
