@@ -1,0 +1,22 @@
+{
+  "name": "inspirabbble",
+  "version": "1.0.0",
+  "description": "Inspire yourself with fresh shots from Dribbble",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mariuzzo/inspirabbble.git"
+  },
+  "keywords": [
+    "inspiration",
+    "dribbble"
+  ],
+  "author": "rmariuzzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mariuzzo/inspirabbble/issues"
+  }
+}
