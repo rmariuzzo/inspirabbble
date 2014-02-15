@@ -9,7 +9,18 @@ module.exports = function(grunt) {
         watch: {
             server: {
                 files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
-                tasks: ['jshint', 'sass:server', 'targethtml:server']
+                tasks: ['jshint', 'sass:server', 'targethtml:server'],
+                options: {
+                    livereload: 35729
+                }
+            }
+        },
+        nodestatic: {
+            server: {
+                options: {
+                    port: 9999,
+                    base: '.'
+                }
             }
         },
         /* jshint camelcase: false */
@@ -92,7 +103,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('server', ['jshint', 'sass:server', 'targethtml:server', 'watch:server']);
+    grunt.registerTask('server', ['jshint', 'sass:server', 'targethtml:server', 'nodestatic:server', 'watch:server']);
     grunt.registerTask('build', ['jshint', 'requirejs', 'sass:build', 'targethtml:build', 'imagemin']);
     grunt.registerTask('default', ['server']);
 };
