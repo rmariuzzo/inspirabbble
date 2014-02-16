@@ -1,7 +1,10 @@
 'use strict';
 
 var paths = {
-    angular: '../bower_components/angular/angular'
+    text: '../bower_components/requirejs-text/text',
+    angular: '../bower_components/angular/angular',
+    handlebars: '../bower_components/handlebars/handlebars.amd',
+    hb: 'util/handlebars-plugin'
 };
 
 // If file is required by node, export paths only
