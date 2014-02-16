@@ -4,7 +4,8 @@ var paths = {
     text: '../bower_components/requirejs-text/text',
     angular: '../bower_components/angular/angular',
     handlebars: '../bower_components/handlebars/handlebars.amd',
-    hb: 'util/handlebars-plugin'
+    hb: 'utils/handlebars-plugin',
+    jquery: '../bower_components/jquery/dist/jquery'
 };
 
 // If file is required by node, export paths only
@@ -19,6 +20,9 @@ if (typeof module === 'object' && module && typeof module.exports === 'object') 
             shim: {
                 angular: {
                     exports: 'angular'
+                },
+                jquery: {
+                    exports: 'jQuery'
                 }
             },
             priority: 'angular'
