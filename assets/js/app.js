@@ -32,17 +32,23 @@ define([
          * Refresh shots.
          */
         App.prototype.refresh = function(callback) {
+            // Preventing calling refresh when already refreshing.
             if (this.$refreshing) {
                 return;
             }
             this.$refreshing = true;
+
+            // Get shots.
             var max = options.get('maxShotsPerRequest');
             dribbble.getShotsByList('everyone', 1, max, function(response, status, xhr) {
+
+                // Process new shots.
                 if (status === 'success') {
                     var shots = $.grep(response.shots, function(shot) {
                         return this.$shots[shot.id] === undefined;
                     }.bind(this));
-                    if (shots.length) {
+                    this.$updated = !!shots.length;
+                    if (this.$updated) {
                         var remaining = this.$shots.splice(max - shots.length);
                         this.$shots = shots.concat(remaining);
                     }
