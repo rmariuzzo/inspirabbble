@@ -4,12 +4,14 @@ define([
         'angular',
         'utils/templates',
         'components/dribbble',
+        'components/options',
         'jquery'
     ],
     function(
         angular,
         templates,
         dribbble,
+        options,
         $) {
 
         //angular.module('inspirabbbe', []);
@@ -34,13 +36,14 @@ define([
                 return;
             }
             this.$refreshing = true;
-            dribbble.getShotsByList('everyone', 1, 30, function(response, status, xhr) {
+            var max = options.get('maxShotsPerRequest');
+            dribbble.getShotsByList('everyone', 1, max, function(response, status, xhr) {
                 if (status === 'success') {
                     var shots = $.grep(response.shots, function(shot) {
                         return this.$shots[shot.id] === undefined;
                     }.bind(this));
                     if (shots.length) {
-                        var remaining = this.$shots.splice(30 - shots.length);
+                        var remaining = this.$shots.splice(max - shots.length);
                         this.$shots = shots.concat(remaining);
                     }
                     this.$shots = shots;
