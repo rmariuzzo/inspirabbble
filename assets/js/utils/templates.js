@@ -2,7 +2,7 @@
 
 define(
     [
-        'hb!../../../views/partials/shot.html'
+        'hbs!../../../views/partials/shot'
     ], function(
         shot
     ) {

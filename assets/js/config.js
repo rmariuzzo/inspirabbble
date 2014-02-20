@@ -4,8 +4,8 @@ var paths = {
     text: '../bower_components/requirejs-text/text',
     angular: '../bower_components/angular/angular',
     handlebars: '../bower_components/handlebars/handlebars.amd',
-    hb: 'utils/handlebars-plugin',
-    jquery: '../bower_components/jquery/dist/jquery'
+    jquery: '../bower_components/jquery/dist/jquery',
+    hbs: '../bower_components/require-handlebars-plugin/hbs'
 };
 
 // If file is required by node, export paths only
@@ -15,7 +15,8 @@ if (typeof module === 'object' && module && typeof module.exports === 'object') 
     // If it's required by require.js, execute configuration function
     if (typeof define === 'function' && define.amd) {
         require.config({
-            baseUrl: 'assets/js/',
+            waitSeconds: 0,
+            baseUrl: '/assets/js/',
             paths: paths,
             shim: {
                 angular: {
