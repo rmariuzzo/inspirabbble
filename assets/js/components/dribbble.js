@@ -25,7 +25,7 @@ define(['jquery'], function($) {
     var DribbbleService = function() {};
 
     var createHandler = function(endpoint) {
-        return function(id, callback, page, perPage) {
+        return function(id, page, perPage, callback) {
 
             endpoint = endpoint.replace(/:\w+/, id);
 
@@ -51,6 +51,6 @@ define(['jquery'], function($) {
         DribbbleService.prototype[method] = createHandler(methods[method]);
     }
 
-    return DribbbleService;
+    return new DribbbleService();
 
 });
