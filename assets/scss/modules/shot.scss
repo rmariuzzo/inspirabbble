@@ -1,0 +1,9 @@
+.shot {
+    img {
+        @include box-shadow(0 0 5px #000);
+        margin: 5px;
+        border: rgba(0, 0, 0, 0) solid 1px;
+        float: left;
+        display: block;
+    }
+}
