@@ -5,6 +5,7 @@ define([
         'utils/templates',
         'components/dribbble',
         'components/options',
+        'components/grid',
         'jquery'
     ],
     function(
@@ -12,11 +13,14 @@ define([
         templates,
         dribbble,
         options,
+        Grid,
         $) {
 
         //angular.module('inspirabbbe', []);
 
-        var App = function() {};
+        var App = function() {
+            this.$grid = new Grid('#grid');
+        };
 
         /**
          * Initialize the app.
@@ -32,6 +36,7 @@ define([
          * Refresh shots.
          */
         App.prototype.refresh = function(callback) {
+
             // Preventing calling refresh when already refreshing.
             if (this.$refreshing) {
                 return;
@@ -39,20 +44,22 @@ define([
             this.$refreshing = true;
 
             // Get shots.
-            var max = options.get('maxShotsPerRequest');
+            var max = options.get('maxShots');
             dribbble.getShotsByList('everyone', 1, max, function(response, status, xhr) {
 
                 // Process new shots.
                 if (status === 'success') {
-                    var shots = $.grep(response.shots, function(shot) {
-                        return this.$shots[shot.id] === undefined;
+
+                    // Store and filter new shots.
+                    this.$newShots = $.grep(response.shots, function(shot) {
+                        if (this.$shots[shot.id]) {
+                            return false;
+                        } else {
+                            this.$shots[shot.id] = shot;
+                            return true;
+                        }
                     }.bind(this));
-                    this.$updated = !!shots.length;
-                    if (this.$updated) {
-                        var remaining = this.$shots.splice(max - shots.length);
-                        this.$shots = shots.concat(remaining);
-                    }
-                    this.$shots = shots;
+
                     this.render();
                 }
 
@@ -70,18 +77,16 @@ define([
                 this.refresh(function() {
                     this.scheduleRefresh();
                 }.bind(this));
-            }.bind(this), 5000);
+            }.bind(this), +options.get('refreshInterval'));
         };
 
         /**
-         * Render shots.
+         * Render new shots.
          */
         App.prototype.render = function() {
-            $('body').empty();
-            (this.$shots || []).forEach(function(shot, index) {
-                $('body').append(templates.shot({
-                    shot: shot,
-                    index: index
+            this.$newShots.forEach(function(shot) {
+                this.$grid.add(templates.shot({
+                    shot: shot
                 }));
             }.bind(this));
         };

@@ -1,7 +1,9 @@
 'use strict';
 
 require(['config'], function() {
-    require(['app'], function(app) {
-        app.init();
+    require(['app', 'jquery'], function(app, $) {
+        $(document).ready(function() {
+            app.init();
+        });
     });
 });
