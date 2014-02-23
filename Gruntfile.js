@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                     name: '../bower_components/almond/almond',
                     include: ['main'],
                     insertRequire: ['main'],
-                    paths: require('./assets/js/config'),
+                    mainConfigFile: './assets/js/config.js',
                     out: './assets/dist/main.js',
                     findNestedDependencies: true,
                     optimize: 'uglify2',
