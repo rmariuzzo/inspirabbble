@@ -1,9 +1,9 @@
 .shot {
+    float: left;
     img {
-        @include box-shadow(0 0 5px #000);
-        margin: 5px;
+        @include box-shadow(0 0 10px rgba(0, 0, 0, 0.2));
+        margin: 10px;
         border: rgba(0, 0, 0, 0) solid 1px;
-        float: left;
         display: block;
     }
 }

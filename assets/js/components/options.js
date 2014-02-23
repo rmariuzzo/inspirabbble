@@ -4,7 +4,10 @@ define([], function() {
 
     // Default options.
     var defaults = {
-        maxShotsPerRequest: 30
+        maxShotsPerRequest: 30,
+        refreshInterval: 5000,
+        maxShots: 200,
+        gridColumns: 6
     };
 
     var Options = function() {

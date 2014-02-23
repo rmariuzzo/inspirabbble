@@ -5,7 +5,8 @@ var paths = {
     angular: '../bower_components/angular/angular',
     handlebars: '../bower_components/handlebars/handlebars.amd',
     jquery: '../bower_components/jquery/dist/jquery',
-    hbs: '../bower_components/require-handlebars-plugin/hbs'
+    hbs: '../bower_components/require-handlebars-plugin/hbs',
+    imagesloaded: '../bower_components/imagesloaded/imagesloaded'
 };
 
 // If file is required by node, export paths only
@@ -26,7 +27,13 @@ if (typeof module === 'object' && module && typeof module.exports === 'object') 
                     exports: 'jQuery'
                 }
             },
-            priority: 'angular'
+            priority: 'angular',
+            map: {
+                imagesloaded: {
+                    'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',
+                    'eventie/eventie': '../bower_components/eventie/eventie'
+                }
+            }
         });
     }
 }
