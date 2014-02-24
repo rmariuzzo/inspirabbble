@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                 files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
                 tasks: ['jshint', 'sass:server', 'targethtml:server'],
                 options: {
-                    livereload: 35729
+                    livereload: 39999
                 }
             }
         },

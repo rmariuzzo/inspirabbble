@@ -30,20 +30,46 @@ define(['jquery'], function($) {
             endpoint = endpoint.replace(/:\w+/, id);
 
             var data = {};
+            var iter = 1;
             if (page || perPage) {
+                if (perPage > 30) {
+                    iter = Math.max(perPage / 30);
+                    perPage = 30;
+                }
                 data = {
                     'page': page,
                     'per_page': perPage
                 };
             }
 
-            $.ajax({
-                type: 'GET',
-                url: '//api.dribbble.com' + endpoint,
-                data: data,
-                dataType: 'jsonp'
-            }).always(callback);
+            var promises = [];
+            for (var i = 0; i < iter; i++) {
+                promises.push($.ajax({
+                    type: 'GET',
+                    url: '//api.dribbble.com' + endpoint,
+                    data: data,
+                    dataType: 'jsonp'
+                }));
+                if (data.page) {
+                    data.page++;
+                }
+            }
 
+            $.when.apply($, promises).then(function() {
+                var data;
+                if (promises.length === 1) {
+                    data = arguments[0].shots;
+                } else {
+                    data = Array.prototype.slice.call(arguments, 0);
+                    data = data.reduce(function(prev, curr) {
+                        return prev.concat(curr[0].shots);
+                    }, []);
+                }
+                data.sort(function(a, b) {
+                    return a.id - b.id;
+                });
+                callback.call(this, data);
+            });
         };
     };
 

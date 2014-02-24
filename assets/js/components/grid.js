@@ -1,6 +1,13 @@
 'use strict';
 
-define(['jquery', 'components/options', 'imagesloaded'], function($, options) {
+define(['jquery', 'components/options', 'eventEmitter/EventEmitter', 'imagesloaded'], function($, options, EventEmitter) {
+
+    var ee = new EventEmitter();
+    var events = {
+        complete: 'complete'
+    };
+
+    // Class definition //
 
     var Grid = function(target) {
         this.target(target);
@@ -12,6 +19,7 @@ define(['jquery', 'components/options', 'imagesloaded'], function($, options) {
      */
     Grid.prototype.target = function(selector) {
         this.$target = $(selector);
+        this.$queue = 0;
     };
 
     /**
@@ -21,6 +29,7 @@ define(['jquery', 'components/options', 'imagesloaded'], function($, options) {
         if (!this.$areColumnsRendered) {
             this._renderColumns();
         }
+        this.$queue++;
         $(html).imagesLoaded(function() {
             var cols = this.$target.find('.col');
             var col = cols.first();
@@ -29,7 +38,17 @@ define(['jquery', 'components/options', 'imagesloaded'], function($, options) {
                 col = col.height() < $this.height() ? col : $this;
             });
             col.prepend(html);
+            this.$queue--;
+            if (!this.$queue) {
+                ee.emitEvent(events.complete);
+            }
         }.bind(this));
+    };
+
+    // Events //
+
+    Grid.prototype.on = function(event, listener) {
+        ee.addListener(event, listener);
     };
 
     /**

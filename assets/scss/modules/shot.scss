@@ -1,9 +1,21 @@
 .shot {
-    float: left;
+    border: rgba(0, 0, 0, 0) solid 1px;
+    margin: 20px 10px;
     img {
         @include box-shadow(0 0 10px rgba(0, 0, 0, 0.2));
-        margin: 10px;
-        border: rgba(0, 0, 0, 0) solid 1px;
         display: block;
+        width: 100%;
+        height: auto;
+    }
+    @include animation-name(shot-in);
+    @include animation-duration(2s);
+}
+
+@include keyframes(shot-in) {
+    0% {
+        max-height: 0;
+    }
+    100% {
+        max-height: 1000px;
     }
 }
