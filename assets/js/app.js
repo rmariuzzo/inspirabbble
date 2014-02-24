@@ -1,7 +1,6 @@
 'use strict';
 
 define([
-        'angular',
         'utils/templates',
         'components/dribbble',
         'components/options',
@@ -9,7 +8,6 @@ define([
         'jquery'
     ],
     function(
-        angular,
         templates,
         dribbble,
         options,
