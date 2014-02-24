@@ -1,5 +1,9 @@
 
-.col {
-    @include clearfix();
-    float: left;
+#grid {
+    margin: 0 10px;
+    .col {
+        @include clearfix();
+        float: left;
+        min-height: 1px;
+    }
 }

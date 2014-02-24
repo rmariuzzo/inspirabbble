@@ -25,12 +25,12 @@
     "requirejs-text": "~2.0.10"
   },
   "dependencies": {
-    "angular": "~1.2.12",
     "handlebars": "~1.3.0",
     "jquery": "~2.1.0",
     "require-handlebars-plugin": "~0.8.0",
     "compass-mixins": "~1.0.0",
     "normalize-scss": "~2.1.3",
-    "imagesloaded": "~3.1.4"
+    "imagesloaded": "~3.1.4",
+    "eventEmitter": "~4.2.7"
   }
 }
