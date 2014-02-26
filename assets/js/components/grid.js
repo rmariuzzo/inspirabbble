@@ -11,7 +11,6 @@ define(['jquery', 'components/options', 'eventEmitter/EventEmitter', 'imagesload
 
     var Grid = function(target) {
         this.target(target);
-        this.$areColumnsRendered = false;
     };
 
     /**
@@ -24,45 +23,56 @@ define(['jquery', 'components/options', 'eventEmitter/EventEmitter', 'imagesload
 
     /**
      * Add an element to the grid.
+     *
+     * @param html string|DOMNode|jQuery The element to add.
      */
     Grid.prototype.add = function(html) {
-        if (!this.$areColumnsRendered) {
-            this._renderColumns();
-        }
         this.$queue++;
         $(html).imagesLoaded(function() {
-            var cols = this.$target.find('.col');
-            var col = cols.first();
-            cols.each(function() {
-                var $this = $(this);
-                col = col.height() < $this.height() ? col : $this;
-            });
-            col.prepend(html);
-            this.$queue--;
+            this.prepend(html);
+            --this.$queue;
             if (!this.$queue) {
                 ee.emitEvent(events.complete);
             }
         }.bind(this));
     };
 
+    /**
+     * Return all columns available.
+     */
+    Grid.prototype.cols = function() {
+        return this.$target.find('.col:visible');
+    };
+
+    /**
+     * Refresh the view.
+     */
+    Grid.prototype.refresh = function() {
+        var cols = this.cols();
+        var children = cols.children();
+        cols.empty();
+        children.each(function(index, child) {
+            this.prepend(child);
+        }.bind(this));
+    };
+
+    /**
+     * Prepend an element to the view.
+     */
+    Grid.prototype.prepend = function(html) {
+        var cols = this.cols();
+        var col = cols.first();
+        cols.each(function() {
+            var $this = $(this);
+            col = col.height() < $this.height() ? col : $this;
+        });
+        col.prepend(html);
+    };
+
     // Events //
 
     Grid.prototype.on = function(event, listener) {
         ee.addListener(event, listener);
-    };
-
-    /**
-     * Render columns into grid.
-     */
-    Grid.prototype._renderColumns = function() {
-        var cols = $();
-        for (var i = 0; i < +options.get('gridColumns'); i++) {
-            var col = $('<div class="col"></div>');
-            col.css('width', (100 / options.get('gridColumns')) + '%');
-            cols = cols.add(col);
-        }
-        this.$target.html(cols);
-        this.$areColumnsRendered = true;
     };
 
     return Grid;

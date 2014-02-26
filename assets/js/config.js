@@ -18,6 +18,9 @@ require.config({
         },
         jquery: {
             exports: 'jQuery'
+        },
+        imagesloaded: {
+            deps: ['jquery']
         }
     },
     priority: 'angular',

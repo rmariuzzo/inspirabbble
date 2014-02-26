@@ -1,14 +1,15 @@
 .shot {
+    @include animation-name(shot-in);
+    @include animation-duration(2s);
     border: rgba(0, 0, 0, 0) solid 1px;
     margin: 20px 10px;
+    background-color: #fff;
     img {
         @include box-shadow(0 0 10px rgba(0, 0, 0, 0.2));
         display: block;
         width: 100%;
         height: auto;
     }
-    @include animation-name(shot-in);
-    @include animation-duration(2s);
 }
 
 @include keyframes(shot-in) {

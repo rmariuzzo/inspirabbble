@@ -10,3 +10,18 @@
 body {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAADFBMVEXExMTg4ODl5eXo6OhkssZvAAAAmElEQVR4AY2SwamGQQwC08Q28ZqwCpt8TaQ0f5Yg5NuTHodhThY0Q89KmnUOiE/i1CMoACR2gvUICgBJrATrERQAkvxzgk9DkgLAO/QddNyQBSkApCOQdNyQBQWAjkB3x4ZaswAcRwxaXg6+EVR/lY7AjuCCrXQEdgQDegkh+HcEr9ExgCYCgyVEwL8gYbCEDPgXhMESMvADG7hGhH+s+3AAAAAASUVORK5CYII=");
 }
+
+header {
+    @include transition(top 0.3s);
+    position: absolute;
+    padding-bottom: 20px;
+    width: 100%;
+    top: -60px;
+    & > div {
+        height: 60px;
+        background-color: rgba(64, 64, 64, 0.7);
+    }
+    &:hover {
+        top: 0;
+    }
+}
