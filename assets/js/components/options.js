@@ -7,7 +7,8 @@ define([], function() {
         maxShotsPerRequest: 30,
         refreshInterval: 5000,
         maxShots: 200,
-        gridColumns: 6
+        gridColumns: 6,
+        hd: false
     };
 
     var Options = function() {

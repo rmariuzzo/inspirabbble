@@ -1,9 +1,24 @@
 
 #grid {
+
+    $col_width: 220px;
+
     margin: 0 10px;
     .col {
         @include clearfix();
+        display: none;
         float: left;
         min-height: 1px;
+    }
+
+    @for $i from 1 through 6 {
+        @media (min-width: $i * $col_width) {
+            .col-#{$i} {
+                display: block;
+            }
+            .col {
+                width: 100% / $i;
+            }
+        }
     }
 }

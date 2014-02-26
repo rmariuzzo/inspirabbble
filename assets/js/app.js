@@ -19,7 +19,7 @@ define([
         var App = function() {
             this.$grid = new Grid('#grid');
             this.$firstRefresh = true;
-            this.$rendering = false;
+            this.bindEvents();
         };
 
         /**
@@ -34,25 +34,22 @@ define([
 
         /**
          * Refresh shots.
+         *
+         * @param callback function A callback function.
          */
         App.prototype.refresh = function(callback) {
 
-            // Preventing calling refresh when already refreshing.
-            if (this.$refreshing) {
-                return;
-            }
-            this.$refreshing = true;
-
-            // Get shots.
+            // Estimate maximum shots that can fit in screen.
             var max = +options.get('maxShotsPerRequest');
             if (this.$firstRefresh) {
-                // Estimate maximum shots that can fit in screen.
-                var cols = +options.get('gridColumns');
+                var cols = this.$grid.cols().length;
                 var width = $(window).width() / cols;
                 var height = (3 / 4) * width;
                 var rows = Math.ceil($(window).height() / height);
                 max = Math.min((cols * rows), +options.get('maxShots'));
             }
+
+            // Get shots.
             dribbble.getShotsByList('everyone', 1, max, function(data) {
 
                 // Store and filter new shots.
@@ -65,10 +62,12 @@ define([
                     }
                 }.bind(this));
 
-                this.render();
-                this.$refreshing = false;
-                this.$firstRefresh = false;
-                callback.call(this, data);
+                // Render new shots.
+                this.render(function() {
+                    this.$firstRefresh = false;
+                    callback.call(this);
+                }.bind(this));
+
             }.bind(this));
         };
 
@@ -76,8 +75,8 @@ define([
          * Schedule the refresh of shots.
          */
         App.prototype.scheduleRefresh = function() {
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(function() {
+            clearTimeout(this.$timeout);
+            this.$timeout = setTimeout(function() {
                 this.refresh(function() {
                     this.scheduleRefresh();
                 }.bind(this));
@@ -86,24 +85,44 @@ define([
 
         /**
          * Render new shots.
+         *
+         * @param callback function A callback function.
          */
-        App.prototype.render = function() {
+        App.prototype.render = function(callback) {
 
-            if (!this.$rendering && this.$newShots.length) {
-                this.$rendering = true;
+            if (this.$newShots.length) {
 
                 // Add new shots to grid.
                 this.$newShots.forEach(function(shot) {
                     this.$grid.add(templates.shot({
-                        shot: shot
+                        shot: shot,
+                        options: {
+                            hd: !! options.get('hd')
+                        }
                     }));
                 }.bind(this));
 
                 // Allow post-render invocation when grid completes.
                 this.$grid.on('complete', function() {
-                    this.$rendering = false;
+                    callback.call(this);
                 }.bind(this));
+            } else {
+                callback.call(this);
             }
+        };
+
+        /**
+         * Bind events.
+         */
+        App.prototype.bindEvents = function() {
+
+            // Handle resize event
+            $(window).on('resize', function() {
+                clearTimeout(this.$resizeTimeout);
+                this.$resizeTimeout = setTimeout(function() {
+                    this.$grid.refresh();
+                }.bind(this), 100);
+            }.bind(this));
         };
 
         return new App();
