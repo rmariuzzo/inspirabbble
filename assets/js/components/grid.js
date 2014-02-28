@@ -11,14 +11,19 @@ define(['jquery', 'components/options', 'eventEmitter/EventEmitter', 'imagesload
 
     var Grid = function(target) {
         this.target(target);
+        this.$queue = 0;
+        this.resize();
     };
 
     /**
      * Set the target where the grid will be rendered.
      */
     Grid.prototype.target = function(selector) {
-        this.$target = $(selector);
-        this.$queue = 0;
+        if (selector) {
+            this.$target = $(selector);
+        } else {
+            return this.$target;
+        }
     };
 
     /**
@@ -54,6 +59,14 @@ define(['jquery', 'components/options', 'eventEmitter/EventEmitter', 'imagesload
         children.each(function(index, child) {
             this.prepend(child);
         }.bind(this));
+    };
+
+    /**
+     * Resize the view.
+     */
+    Grid.prototype.resize = function() {
+        var target = this.target();
+        target.height($(window).height() - (target.outerHeight(true) - target.height()));
     };
 
     /**

@@ -1,9 +1,10 @@
 
 #grid {
+    $col-width: 220px;
+    @include clearfix();
+    margin: $layout-header-height 10px 0 10px;
+    overflow: hidden;
 
-    $col_width: 220px;
-
-    margin: 0 10px;
     .col {
         @include clearfix();
         display: none;
@@ -12,7 +13,7 @@
     }
 
     @for $i from 1 through 6 {
-        @media (min-width: $i * $col_width) {
+        @media (min-width: $i * $col-width) {
             .col-#{$i} {
                 display: block;
             }

@@ -1,4 +1,6 @@
 
+$layout-header-height: 60px;
+
 *,
 *:before,
 *:after {
@@ -12,16 +14,37 @@ body {
 }
 
 header {
-    @include transition(top 0.3s);
-    position: absolute;
-    padding-bottom: 20px;
+    @include transition(opacity 0.3s);
+    position: fixed;
     width: 100%;
-    top: -60px;
-    & > div {
-        height: 60px;
-        background-color: rgba(64, 64, 64, 0.7);
+    opacity: 0;
+    top: 0;
+
+    & > ul {
+        @include inline-block-list();
+        height: $layout-header-height;
+        background-color: rgba(0, 0, 0, 0.85);
     }
-    &:hover {
-        top: 0;
+
+    &:hover,
+    &.active {
+        opacity: 1;
     }
+
+    h1 {
+        color: #fff;
+        margin: 0;
+        padding: 0 40px 0 20px;
+        font-size: 24px;
+        line-height: $layout-header-height
+    }
+
+    span {
+        color: #ddd;
+        font-size: 12px;
+    }
+}
+
+footer {
+    display: none;
 }
