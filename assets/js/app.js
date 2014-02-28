@@ -121,6 +121,7 @@ define([
                 clearTimeout(this.$resizeTimeout);
                 this.$resizeTimeout = setTimeout(function() {
                     this.$grid.refresh();
+                    this.$grid.resize();
                 }.bind(this), 100);
             }.bind(this));
         };
