@@ -1,9 +1,7 @@
 
-#grid {
+.grid {
     $col-width: 220px;
     @include clearfix();
-    margin: $layout-header-height 10px 0 10px;
-    overflow: hidden;
 
     .col {
         @include clearfix();

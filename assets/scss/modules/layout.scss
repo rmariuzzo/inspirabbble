@@ -45,6 +45,11 @@ header {
     }
 }
 
+#grid {
+    margin: $layout-header-height 10px 0 10px;
+    overflow: hidden;
+}
+
 footer {
     display: none;
 }

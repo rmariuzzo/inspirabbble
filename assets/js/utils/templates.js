@@ -2,12 +2,15 @@
 
 define(
     [
-        'hbs!../../../views/partials/shot'
+        'hbs!../../../views/partials/shot',
+        'hbs!../../../views/partials/grid'
     ], function(
-        shot
+        shot,
+        grid
     ) {
         return {
-            shot: shot
+            shot: shot,
+            grid: grid
         };
     }
 );
