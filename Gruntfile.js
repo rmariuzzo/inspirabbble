@@ -7,16 +7,16 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         watch: {
-            server: {
+            dev: {
                 files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
-                tasks: ['jshint', 'sass:server', 'targethtml:server'],
+                tasks: ['jshint', 'sass:dev', 'targethtml:dev'],
                 options: {
                     livereload: 39999
                 }
             }
         },
         nodestatic: {
-            server: {
+            dev: {
                 options: {
                     port: 9999,
                     base: '.'
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
             }
         },
         sass: {
-            server: {
+            dev: {
                 files: {
                     'assets/css/main.css': 'assets/scss/main.scss'
                 },
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
             }
         },
         targethtml: {
-            server: {
+            dev: {
                 files: {
                     'index.html': 'views/index.html'
                 }
@@ -100,10 +100,21 @@ module.exports = function(grunt) {
                     'index.html': 'views/index.html'
                 }
             }
+        },
+        copy: {
+            resources: {
+                files: [{
+                    expand: true,
+                    src: 'assets/bower_components/dripicons/fonts/**',
+                    dest: 'assets/fonts/',
+                    flatten: true,
+                    filter: 'isFile'
+                }]
+            }
         }
     });
 
-    grunt.registerTask('server', ['jshint', 'sass:server', 'targethtml:server', 'nodestatic:server', 'watch:server']);
-    grunt.registerTask('build', ['jshint', 'requirejs', 'sass:build', 'targethtml:build', 'imagemin']);
-    grunt.registerTask('default', ['server']);
+    grunt.registerTask('dev', ['jshint', 'sass:dev', 'copy:resources', 'targethtml:dev', 'nodestatic:dev', 'watch:dev']);
+    grunt.registerTask('build', ['jshint', 'requirejs', 'sass:build', 'copy:resources', 'targethtml:build', 'imagemin']);
+    grunt.registerTask('default', ['dev']);
 };

@@ -1,0 +1,35 @@
+
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #ddd;
+    font-size: 12px;
+
+    ul {
+        @include inline-block-list();
+        height: $layout-header-height;
+        line-height: $layout-header-height;
+
+        li {
+            margin: 0 20px;
+        }
+
+        &.brand {
+            float: left;
+
+            .title h1 {
+                color: #fff;
+                margin: 0;
+                padding: 0;
+                font-size: 24px;
+                line-height: $layout-header-height
+            }
+        }
+
+        &.options {
+            float: right;
+        }
+    }
+}

@@ -13,38 +13,6 @@ body {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAADFBMVEXExMTg4ODl5eXo6OhkssZvAAAAmElEQVR4AY2SwamGQQwC08Q28ZqwCpt8TaQ0f5Yg5NuTHodhThY0Q89KmnUOiE/i1CMoACR2gvUICgBJrATrERQAkvxzgk9DkgLAO/QddNyQBSkApCOQdNyQBQWAjkB3x4ZaswAcRwxaXg6+EVR/lY7AjuCCrXQEdgQDegkh+HcEr9ExgCYCgyVEwL8gYbCEDPgXhMESMvADG7hGhH+s+3AAAAAASUVORK5CYII=");
 }
 
-header {
-    @include transition(opacity 0.3s);
-    position: fixed;
-    width: 100%;
-    opacity: 0;
-    top: 0;
-
-    & > ul {
-        @include inline-block-list();
-        height: $layout-header-height;
-        background-color: rgba(0, 0, 0, 0.85);
-    }
-
-    &:hover,
-    &.active {
-        opacity: 1;
-    }
-
-    h1 {
-        color: #fff;
-        margin: 0;
-        padding: 0 40px 0 20px;
-        font-size: 24px;
-        line-height: $layout-header-height
-    }
-
-    span {
-        color: #ddd;
-        font-size: 12px;
-    }
-}
-
 #grid {
     margin: $layout-header-height 10px 0 10px;
     overflow: hidden;

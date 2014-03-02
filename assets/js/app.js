@@ -5,6 +5,7 @@ define([
         'components/dribbble',
         'components/options',
         'components/grid',
+        'components/header',
         'jquery'
     ],
     function(
@@ -12,12 +13,14 @@ define([
         dribbble,
         options,
         Grid,
+        Header,
         $) {
 
         //angular.module('inspirabbbe', []);
 
         var App = function() {
             this.$grid = new Grid('#grid');
+            this.$header = new Header('#header');
             this.$firstRefresh = true;
             this.bindEvents();
         };
