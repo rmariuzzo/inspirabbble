@@ -29,6 +29,8 @@ define(
             this.resize();
         };
 
+        // Methods //
+
         /**
          * Add an element to the grid.
          *
@@ -88,14 +90,41 @@ define(
          * Move the grid to make the next row visible.
          */
         Grid.prototype.next = function() {
-            // TODO
+            var rowHeight = this.rowHeight();
+            var remaining = this.$grid.height() - this.$target.height() + (parseInt(this.$grid.css('top'), 10) || 0);
+            if (remaining > rowHeight) {
+                this.$grid.css('top', '-=' + rowHeight);
+            } else {
+                this.$grid.css('top', (this.$target.height() - this.$grid.height()));
+            }
         };
 
         /**
          * Move the grid to make the previous row visible.
          */
         Grid.prototype.prev = function() {
-            // TODO
+            var rowHeight = this.rowHeight();
+            var remaining = -parseInt(this.$grid.css('top'), 10) || 0;
+            var inperfections = (remaining % rowHeight);
+            if (inperfections) {
+                this.$grid.css('top', '+=' + inperfections);
+                this.$lastRow = false;
+            } else if (remaining > rowHeight) {
+                this.$grid.css('top', '+=' + rowHeight);
+            } else {
+                this.$grid.css('top', 0);
+            }
+        };
+
+        /**
+         * Return the virtual row height.
+         */
+        Grid.prototype.rowHeight = function() {
+            var children = this.cols().first().children();
+            if (children.length >= 2) {
+                return children.eq(1).offset().top - children.eq(0).offset().top;
+            }
+            return 0;
         };
 
         // Events //
