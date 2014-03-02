@@ -1,9 +1,17 @@
 
+$dripicons-fonts-path: '/assets/fonts/';
+
+// Vendors //
+
 @import "../bower_components/compass-mixins/lib/compass";
 @import "../bower_components/compass-mixins/lib/animation";
 @import "../bower_components/normalize-scss/normalize";
+@import "../bower_components/dripicons/scss/dripicons";
+
+// Modules //
 
 @import "modules/typography";
 @import "modules/layout";
 @import "modules/shot";
 @import "modules/grid";
+@import "modules/header";
