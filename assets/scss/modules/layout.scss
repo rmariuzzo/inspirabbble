@@ -1,0 +1,24 @@
+
+$layout-header-height: 60px;
+
+*,
+*:before,
+*:after {
+    @include box-sizing(border-box);
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAADFBMVEXExMTg4ODl5eXo6OhkssZvAAAAmElEQVR4AY2SwamGQQwC08Q28ZqwCpt8TaQ0f5Yg5NuTHodhThY0Q89KmnUOiE/i1CMoACR2gvUICgBJrATrERQAkvxzgk9DkgLAO/QddNyQBSkApCOQdNyQBQWAjkB3x4ZaswAcRwxaXg6+EVR/lY7AjuCCrXQEdgQDegkh+HcEr9ExgCYCgyVEwL8gYbCEDPgXhMESMvADG7hGhH+s+3AAAAAASUVORK5CYII=");
+}
+
+#header > * {
+    z-index: 50;
+}
+
+#grid {
+    padding-top: $layout-header-height;
+    overflow: hidden;
+    z-index: 0;
+}

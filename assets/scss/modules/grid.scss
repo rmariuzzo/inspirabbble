@@ -1,0 +1,64 @@
+
+.grid-wrapper {
+    position: relative;
+
+    header,
+    footer {
+        position: absolute;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.2);
+        width: 100%;
+        z-index: 5;
+    }
+
+    header {
+        .prev {
+            display: block;
+            width: 100%;
+            color: #000;
+            line-height: 40px;
+            font-size: 40px;
+            text-align: center;
+        }
+    }
+
+    footer {
+        .next {
+            display: block;
+            width: 100%;
+            color: #000;
+            line-height: 40px;
+            font-size: 40px;
+            text-align: center;
+        }
+    }
+
+    .grid {
+        $col-width: 220px;
+        @include clearfix();
+        @include transition-property(top);
+        @include transition-duration(0.4s);
+        position: relative;
+        top: 0;
+        padding: 0 10px;
+
+        .col {
+            @include clearfix();
+            display: none;
+            float: left;
+            min-height: 1px;
+        }
+
+        @for $i from 1 through 6 {
+            @media (min-width: $i * $col-width) {
+                .col-#{$i} {
+                    display: block;
+                }
+                .col {
+                    width: 100% / $i;
+                }
+            }
+        }
+    }
+}
+
