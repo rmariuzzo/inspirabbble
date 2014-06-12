@@ -21,14 +21,16 @@
   },
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "load-grunt-tasks": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3",
+    "grunt-concurrent": "^0.5.0",
+    "grunt-contrib-connect": "^0.8.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-imagemin": "^0.7.1",
     "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-fb-flo": "^0.1.5",
     "grunt-sass": "~0.10.0",
-    "grunt-contrib-imagemin": "~0.5.0",
     "grunt-targethtml": "~0.2.6",
-    "grunt-nodestatic": "~0.1.2",
-    "grunt-contrib-copy": "~0.5.0"
+    "load-grunt-tasks": "~0.3.0",
+    "minimatch": "^0.3.0"
   }
 }
