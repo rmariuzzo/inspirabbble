@@ -23,10 +23,18 @@ define(
 
         var Grid = function(target) {
             this.$target = $(target);
-            this.$grid = $(templates.grid());
-            this.$target.html(this.$grid);
+            this.$template = $(templates.grid());
+            this.$target.html(this.$template);
+            this.$wrapper = this.$template;
+            this.$grid = this.$template.find('.grid');
+            this.$header = this.$template.find('header');
+            this.$footer = this.$template.find('footer');
+            this.$prev = this.$header.find('.prev');
+            this.$next = this.$footer.find('.next');
             this.$queue = 0;
             this.resize();
+            this.bindEvents();
+            this.startTimers();
         };
 
         // Methods //
@@ -70,7 +78,10 @@ define(
          * Resize the view.
          */
         Grid.prototype.resize = function() {
+            // The following line should not be there.
             this.$target.height($(window).height() - (this.$target.outerHeight(true) - this.$target.height()));
+            this.$wrapper.height(this.$target.height());
+            this.$footer.css('top', this.$target.height() - this.$footer.height());
         };
 
         /**
@@ -125,6 +136,63 @@ define(
                 return children.eq(1).offset().top - children.eq(0).offset().top;
             }
             return 0;
+        };
+
+        /**
+         * Refresh arrows visibility state.
+         */
+        Grid.prototype.refresh = function() {
+            var top = parseInt(this.$grid.css('top'), 10);
+            if (top === 0) {
+                this.$header.hide();
+            } else {
+                this.$header.show();
+            }
+            var remaining = this.$grid.height() - this.$target.height() + top;
+            if (remaining > 0) {
+                this.$footer.show();
+            } else {
+                this.$footer.hide();
+            }
+        };
+
+        /**
+         * Bind events.
+         */
+        Grid.prototype.bindEvents = function() {
+            this.$prev.on('click', function(event) {
+                event.preventDefault();
+                this.prev();
+            }.bind(this));
+
+            this.$next.on('click', function(event) {
+                event.preventDefault();
+                this.next();
+            }.bind(this));
+
+            this.$wrapper.on('DOMMouseScroll', function(event) {
+                event.preventDefault();
+                if (event.originalEvent.detail > 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }.bind(this));
+
+            this.$wrapper.on('mousewheel', function(event) {
+                event.preventDefault();
+                if (event.originalEvent.wheelDelta < 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }.bind(this));
+        };
+
+        Grid.prototype.startTimers = function() {
+            setInterval(function() {
+                this.refresh();
+            }.bind(this), 300);
         };
 
         // Events //
