@@ -3,9 +3,11 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
+    var minimatch = require('minimatch');
 
     // Project configuration.
     grunt.initConfig({
+
         watch: {
             dev: {
                 files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
@@ -15,29 +17,97 @@ module.exports = function(grunt) {
                 }
             }
         },
-        nodestatic: {
-            dev: {
+
+        flo: {
+            serve: {
                 options: {
-                    port: 9999,
-                    base: '.'
+                    dir: './',
+                    glob: [
+                        '!**/.subl*.tmp'
+                    ],
+                    resolver: function(filepath, callback) {
+
+                        var fs = require('fs');
+
+                        var targets = [{
+                            files: [
+                                'assets/**/*.js'
+                            ],
+                            tasks: ['jshint'],
+                            callback: {
+                                resourceURL: filepath,
+                                contentsPath: filepath
+                            }
+                        }, {
+                            files: [
+                                'assets/**/*.scss'
+                            ],
+                            tasks: ['sass:dev'],
+                            callback: {
+                                resourceURL: 'assets/css/main.css',
+                                contentsPath: 'assets/css/main.css'
+                            }
+                        }];
+
+                        targets.forEach(function(target) {
+                            var match = target.files.some(function(pattern) {
+                                return minimatch(filepath, pattern);
+                            });
+
+                            if (!match) {
+                                return;
+                            }
+
+                            grunt.log.writeln('File: ' + filepath + ' changed!');
+
+                            grunt.util.spawn({
+                                grunt: true,
+                                args: [target.tasks.join(' ')]
+                            }, function(error, result) {
+                                if (error) {
+                                    grunt.log.error(result);
+                                    return;
+                                }
+                                grunt.log.writeln(result);
+                                callback({
+                                    resourceURL: target.callback.resourceURL,
+                                    contents: fs.readFileSync(target.callback.contentsPath)
+                                });
+                            });
+                        });
+                    }
                 }
             }
         },
-        /* jshint camelcase: false */
-        notify_hooks: {
-            options: {
-                enabled: true,
-                max_jshint_notifications: 5,
-                title: 'Inspirabbble'
+
+        connect: {
+            server: {
+                options: {
+                    hostname: 'localhost',
+                    port: 7676,
+                    base: './',
+                    open: true,
+                    keepalive: true
+                }
             }
         },
-        /* jshint camelcase: true */
+
+        concurrent: {
+            serve: {
+                tasks: ['connect', 'flo'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            }
+        },
+
         jshint: {
             files: ['Gruntfile.js', 'assets/js/**/*.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
         },
+
         requirejs: {
             compile: {
                 options: {
@@ -57,6 +127,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         sass: {
             dev: {
                 files: {
@@ -75,20 +146,18 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         imagemin: {
             all: {
-                options: {
-                    optimizationLevel: 3,
-                    progressive: true
-                },
                 files: [{
                     expand: true,
                     cwd: './',
-                    src: ['assets/img/**/**/*.png', 'assets/img/**/**/*.jpg'],
+                    src: ['assets/img/**/**/*.{png,jpg,gif}'],
                     dest: './',
                 }]
             }
         },
+
         targethtml: {
             dev: {
                 files: {
@@ -101,6 +170,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         copy: {
             resources: {
                 files: [{
@@ -114,7 +184,16 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('dev', ['jshint', 'sass:dev', 'copy:resources', 'targethtml:dev', 'nodestatic:dev', 'watch:dev']);
-    grunt.registerTask('build', ['jshint', 'requirejs', 'sass:build', 'copy:resources', 'targethtml:build', 'imagemin']);
-    grunt.registerTask('default', ['dev']);
+    // Grunt task registration //
+
+    // Build tasks.
+    grunt.registerTask('build:dev', 'Build the development version.', ['copy:resources', 'targethtml:dev', 'sass:dev']);
+    grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:build', 'copy:resources', 'targethtml:build', 'imagemin']);
+    grunt.registerTask('build', ['build:prod']);
+    // Serve tasks.
+    grunt.registerTask('serve:dev', 'Serve the application in development mode.', ['build:dev', 'concurrent:serve']);
+    grunt.registerTask('serve:prod', 'Serve the application in production mode.', ['build:prod', 'connect']);
+    grunt.registerTask('serve', ['serve:dev']);
+    // Default task.
+    grunt.registerTask('default', ['serve']);
 };
