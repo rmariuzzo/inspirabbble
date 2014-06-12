@@ -16,8 +16,6 @@ define([
         Header,
         $) {
 
-        //angular.module('inspirabbbe', []);
-
         var App = function() {
             this.$grid = new Grid('#grid');
             this.$header = new Header('#header');
