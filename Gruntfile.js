@@ -91,12 +91,20 @@ module.exports = function(grunt) {
                     outputStyle: 'nested'
                 }
             },
-            build: {
+            prod: {
                 files: {
                     'assets/dist/main.css': 'assets/scss/main.scss'
                 },
                 options: {
                     outputStyle: 'compressed'
+                }
+            },
+            validate: {
+                files: {
+                    'assets/css/main.css': 'assets/scss/main.scss'
+                },
+                options: {
+                    check: true
                 }
             }
         },
@@ -118,7 +126,7 @@ module.exports = function(grunt) {
                     'index.html': 'views/index.html'
                 }
             },
-            build: {
+            prod: {
                 files: {
                     'index.html': 'views/index.html'
                 }
@@ -139,7 +147,18 @@ module.exports = function(grunt) {
 
         githooks: {
             all: {
-                'pre-commit': 'jshint requirejs sass:build'
+                'pre-commit': 'validate'
+            }
+        },
+
+        jsonlint: {
+            all: {
+                src: [
+                    '.bowerrc',
+                    '.jshintrc',
+                    'bower.json',
+                    'package.json'
+                ]
             }
         }
 
@@ -149,9 +168,10 @@ module.exports = function(grunt) {
 
     // Setup tasks.
     grunt.registerTask('setup', 'Setup the development environment.', ['githooks']);
+    grunt.registerTask('validate', 'Validate source files.', ['jshint', 'jsonlint', 'requirejs', 'sass:validate']);
     // Build tasks.
     grunt.registerTask('build:dev', 'Build the development version.', ['copy:resources', 'targethtml:dev', 'sass:dev']);
-    grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:build', 'copy:resources', 'targethtml:build', 'imagemin']);
+    grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:prod', 'copy:resources', 'targethtml:prod', 'imagemin']);
     grunt.registerTask('build', ['build:prod']);
     // Serve tasks.
     grunt.registerTask('serve:dev', 'Serve the application in development mode.', ['build:dev', 'concurrent:serve']);

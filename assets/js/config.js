@@ -7,6 +7,8 @@ require.config({
         text: '../bower_components/requirejs-text/text',
         handlebars: '../bower_components/handlebars/handlebars.amd',
         jquery: '../bower_components/jquery/dist/jquery',
+        underscore: '../bower_components/underscore/underscore.js',
+        backbone: '../bower_components/backbone/backbone.js',
         hbs: '../bower_components/require-handlebars-plugin/hbs',
         imagesloaded: '../bower_components/imagesloaded/imagesloaded',
         'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',
