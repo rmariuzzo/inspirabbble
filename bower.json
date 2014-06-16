@@ -32,6 +32,7 @@
     "normalize-scss": "~2.1.3",
     "imagesloaded": "~3.1.4",
     "eventEmitter": "~4.2.7",
-    "dripicons": "~1.0.0"
+    "dripicons": "~1.0.0",
+    "backbone": "~1.1.2"
   }
 }
