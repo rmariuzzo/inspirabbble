@@ -135,11 +135,20 @@ module.exports = function(grunt) {
                     filter: 'isFile'
                 }]
             }
+        },
+
+        githooks: {
+            all: {
+                'pre-commit': 'jshint requirejs sass:build'
+            }
         }
+
     });
 
     // Grunt task registration //
 
+    // Setup tasks.
+    grunt.registerTask('setup', 'Setup the development environment.', ['githooks']);
     // Build tasks.
     grunt.registerTask('build:dev', 'Build the development version.', ['copy:resources', 'targethtml:dev', 'sass:dev']);
     grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:build', 'copy:resources', 'targethtml:build', 'imagemin']);
