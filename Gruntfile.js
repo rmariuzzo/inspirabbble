@@ -3,20 +3,8 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-    var minimatch = require('minimatch');
-
     // Project configuration.
     grunt.initConfig({
-
-        watch: {
-            dev: {
-                files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
-                tasks: ['jshint', 'sass:dev', 'targethtml:dev'],
-                options: {
-                    livereload: 39999
-                }
-            }
-        },
 
         flo: {
             serve: {
@@ -25,57 +13,23 @@ module.exports = function(grunt) {
                     glob: [
                         '!**/.subl*.tmp'
                     ],
-                    resolver: function(filepath, callback) {
-
-                        var fs = require('fs');
-
-                        var targets = [{
-                            files: [
-                                'assets/**/*.js'
-                            ],
-                            tasks: ['jshint'],
-                            callback: {
-                                resourceURL: filepath,
-                                contentsPath: filepath
-                            }
-                        }, {
-                            files: [
-                                'assets/**/*.scss'
-                            ],
-                            tasks: ['sass:dev'],
-                            callback: {
-                                resourceURL: 'assets/css/main.css',
-                                contentsPath: 'assets/css/main.css'
-                            }
-                        }];
-
-                        targets.forEach(function(target) {
-                            var match = target.files.some(function(pattern) {
-                                return minimatch(filepath, pattern);
-                            });
-
-                            if (!match) {
-                                return;
-                            }
-
-                            grunt.log.writeln('File: ' + filepath + ' changed!');
-
-                            grunt.util.spawn({
-                                grunt: true,
-                                args: [target.tasks.join(' ')]
-                            }, function(error, result) {
-                                if (error) {
-                                    grunt.log.error(result);
-                                    return;
-                                }
-                                grunt.log.writeln(result);
-                                callback({
-                                    resourceURL: target.callback.resourceURL,
-                                    contents: fs.readFileSync(target.callback.contentsPath)
-                                });
-                            });
-                        });
-                    }
+                    resolvers: [{
+                        files: ['assets/**/*.js'],
+                        tasks: ['jshint']
+                    }, {
+                        files: ['assets/**/*.scss'],
+                        tasks: ['sass:dev'],
+                        callback: {
+                            resourceURL: 'assets/css/main.css',
+                            contentsPath: 'assets/css/main.css'
+                        }
+                    }, {
+                        files: ['views/**/*.html', 'views/**/*.hbs'],
+                        tasks: ['targethtml:dev'],
+                        callback: {
+                            reload: true
+                        }
+                    }]
                 }
             }
         },
