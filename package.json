@@ -27,7 +27,7 @@
     "grunt-contrib-imagemin": "^0.7.1",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-fb-flo": "^0.1.5",
+    "grunt-fb-flo": "~0.2.1",
     "grunt-githooks": "^0.3.1",
     "grunt-jsonlint": "^1.0.4",
     "grunt-sass": "~0.10.0",
