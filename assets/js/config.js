@@ -15,20 +15,11 @@ require.config({
         'eventie/eventie': '../bower_components/eventie/eventie'
     },
     shim: {
-        angular: {
-            exports: 'angular'
-        },
         jquery: {
             exports: 'jQuery'
         },
         imagesloaded: {
             deps: ['jquery']
-        }
-    },
-    priority: 'angular',
-    map: {
-        imagesloaded: {
-
         }
     }
 });
