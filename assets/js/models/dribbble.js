@@ -1,8 +1,18 @@
+/**
+ * The dribble API model.
+ */
 'use strict';
 
-define(['jquery'], function($) {
+define([
+    'jquery',
+    'underscore',
+    'backbone'
+], function($, _, Backbone) {
 
-    var methods = {
+    /**
+     * Dribbble API endpoints.
+     */
+    var endpoints = {
 
         // shots
         getShot: '/shots/:id',
@@ -22,61 +32,91 @@ define(['jquery'], function($) {
         getComments: '/shots/:id/comments'
     };
 
-    var DribbbleService = function() {};
+    /**
+     * Create a function a handler for a given endpoint.
+     */
+    function createHandler(endpoint) {
 
-    var createHandler = function(endpoint) {
+        /**
+         * @param mixed id The value of the main parameter.
+         * @param number page The page to fetch.
+         * @param number perPage The number of items per page to fetch.
+         * @param function A callback function.
+         */
         return function(id, page, perPage, callback) {
 
+            // Replace the the first placeholder with the give value.
             endpoint = endpoint.replace(/:\w+/, id);
 
-            var data = {};
+            // Prepare pagination object.
+            var pagination = {};
             var iter = 1;
             if (page || perPage) {
                 if (perPage > 30) {
                     iter = Math.max(perPage / 30);
                     perPage = 30;
                 }
-                data = {
+                pagination = {
                     'page': page,
                     'per_page': perPage
                 };
             }
 
+            // Execute all async calls needed.
             var promises = [];
             for (var i = 0; i < iter; i++) {
                 promises.push($.ajax({
                     type: 'GET',
                     url: '//api.dribbble.com' + endpoint,
-                    data: data,
+                    data: pagination,
                     dataType: 'jsonp'
                 }));
-                if (data.page) {
-                    data.page++;
+                if (pagination.page) {
+                    pagination.page++;
                 }
             }
 
+            // Parse the results and execute the callback.
             $.when.apply($, promises).then(function() {
                 var data;
                 if (promises.length === 1) {
                     data = arguments[0].shots;
                 } else {
+                    // Concat all results in a single array.
                     data = Array.prototype.slice.call(arguments, 0);
                     data = data.reduce(function(prev, curr) {
                         return prev.concat(curr[0].shots);
                     }, []);
                 }
+
+                // Sort shots by id.
                 data.sort(function(a, b) {
                     return a.id - b.id;
                 });
-                callback.call(this, data);
+
+                // Execute given callback.
+                if (_.isFunction(callback)) {
+                    callback.call(this, data);
+                }
             });
         };
-    };
-
-    for (var method in methods) {
-        DribbbleService.prototype[method] = createHandler(methods[method]);
     }
 
-    return new DribbbleService();
+    /**
+     * Abstract dribbble API.
+     */
+    var AbstractDribbble = {};
+
+    // Create a handler for each endpoint.
+    for (var method in endpoints) {
+        AbstractDribbble[method] = createHandler(endpoints[method]);
+    }
+
+    /**
+     * The Dribbble model.
+     */
+    var Dribbble = Backbone.Model.extend(AbstractDribbble);
+
+    return Dribbble;
 
 });

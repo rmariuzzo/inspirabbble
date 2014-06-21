@@ -1,25 +1,34 @@
+/**
+ * The "Inspirabbble" application.
+ */
+
 'use strict';
 
 define([
         'utils/templates',
-        'components/dribbble',
+        'models/dribbble',
         'components/options',
         'components/grid',
         'components/header',
-        'jquery'
+        'jquery',
+        'backbone'
     ],
     function(
         templates,
-        dribbble,
+        Dribbble,
         options,
         Grid,
         Header,
         $) {
 
+        /**
+         * @constructor
+         */
         var App = function() {
             this.$grid = new Grid('#grid');
             this.$header = new Header('#header');
             this.$firstRefresh = true;
+            this.$dribbble = new Dribbble();
             this.bindEvents();
         };
 
@@ -51,7 +60,7 @@ define([
             }
 
             // Get shots.
-            dribbble.getShotsByList('everyone', 1, max, function(data) {
+            this.$dribbble.getShotsByList('everyone', 1, max, function(data) {
 
                 // Store and filter new shots.
                 this.$newShots = $.grep(data, function(shot) {
@@ -98,7 +107,7 @@ define([
                     this.$grid.add(templates.shot({
                         shot: shot,
                         options: {
-                            hd: !! options.get('hd')
+                            hd: !!options.get('hd')
                         }
                     }));
                 }.bind(this));
@@ -127,7 +136,7 @@ define([
             }.bind(this));
         };
 
-        return new App();
+        return App;
 
     }
 );
