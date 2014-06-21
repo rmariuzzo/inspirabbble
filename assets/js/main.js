@@ -1,10 +1,15 @@
 'use strict';
 
+// Load requirejs configuration.
 require(['config'], function() {
-    require(['app', 'jquery'], function(app, $) {
+
+    // Load app when things are ready.
+    require(['app', 'jquery'], function(App, $) {
+
         $(document).ready(function() {
+            var app = new App();
             app.init();
-            window.inspirabbble = app;
         });
+
     });
 });
