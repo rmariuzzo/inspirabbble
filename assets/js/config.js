@@ -19,11 +19,10 @@ require.config({
         'eventie/eventie': '../bower_components/eventie/eventie'
     },
     shim: {
-        jquery: {
-            exports: 'jQuery'
-        },
-        imagesloaded: {
-            deps: ['jquery']
+        imagesloaded: ['jquery'],
+        backbone: ['underscore', 'jquery'],
+        underscore: {
+            exports: '_'
         }
     }
 });
