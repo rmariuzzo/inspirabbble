@@ -9,9 +9,7 @@ define([
     'backbone'
 ], function($, _, Backbone) {
 
-    /**
-     * Dribbble API endpoints.
-     */
+    // Dribbble API endpoints.
     var endpoints = {
 
         // shots
@@ -33,7 +31,7 @@ define([
     };
 
     /**
-     * Create a function a handler for a given endpoint.
+     * Create a function handler for a given endpoint.
      */
     function createHandler(endpoint) {
 
@@ -102,20 +100,14 @@ define([
         };
     }
 
-    /**
-     * Abstract dribbble API.
-     */
-    var AbstractDribbble = {};
-
     // Create a handler for each endpoint.
+    var Dribbble = {};
     for (var method in endpoints) {
-        AbstractDribbble[method] = createHandler(endpoints[method]);
+        Dribbble[method] = createHandler(endpoints[method]);
     }
 
-    /**
-     * The Dribbble model.
-     */
-    var Dribbble = Backbone.Model.extend(AbstractDribbble);
+    // Create the Dribbble model.
+    Dribbble = Backbone.Model.extend(Dribbble);
 
     return Dribbble;
 
