@@ -9,6 +9,8 @@ define([
     'backbone'
 ], function($, _, Backbone) {
 
+    var Dribbble = {};
+
     // Dribbble API endpoints.
     var endpoints = {
 
@@ -76,32 +78,31 @@ define([
 
             // Parse the results and execute the callback.
             $.when.apply($, promises).then(function() {
-                var data;
+                var results;
                 if (promises.length === 1) {
-                    data = arguments[0].shots;
+                    results = arguments[0].shots;
                 } else {
                     // Concat all results in a single array.
-                    data = Array.prototype.slice.call(arguments, 0);
-                    data = data.reduce(function(prev, curr) {
+                    results = Array.prototype.slice.call(arguments, 0);
+                    results = results.reduce(function(prev, curr) {
                         return prev.concat(curr[0].shots);
                     }, []);
                 }
 
                 // Sort shots by id.
-                data.sort(function(a, b) {
+                results.sort(function(a, b) {
                     return a.id - b.id;
                 });
 
                 // Execute given callback.
                 if (_.isFunction(callback)) {
-                    callback.call(this, data);
+                    callback.call(this, results);
                 }
             });
         };
     }
 
     // Create a handler for each endpoint.
-    var Dribbble = {};
     for (var method in endpoints) {
         Dribbble[method] = createHandler(endpoints[method]);
     }
