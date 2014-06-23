@@ -2,17 +2,24 @@
 
 define([
     'jquery',
+    'backbone',
     'hbs!templates/header'
-], function($, template) {
+], function($, Backbone, template) {
 
-    // Class definition //
+    var Header = Backbone.View.extend({
 
-    var Header = function(target) {
-        this.$target = $(target);
-        this.$target.html(template());
-    };
+        template: $(template()),
 
-    // Methods //
+        initialize: function() {
+            this.el = $(this.el);
+            this.render();
+        },
+
+        render: function() {
+            this.el.html(this.template);
+        }
+
+    });
 
     return Header;
 

@@ -26,7 +26,9 @@ define([
                 this.$grid = new Grid({
                     el: '#grid'
                 });
-                this.$header = new Header('#header');
+                this.$header = new Header({
+                    el: '#header'
+                });
                 this.$firstRefresh = true;
                 this.$dribbble = new Dribbble();
                 this.bindEvents();
