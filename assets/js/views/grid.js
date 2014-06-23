@@ -7,7 +7,7 @@ define(
         'hbs!templates/grid',
         'backbone',
         'imagesloaded'
-    ], function($, options, template, Backbone) {
+    ], function($, Options, template, Backbone) {
 
         var events = {
             complete: 'complete'
@@ -132,17 +132,19 @@ define(
              * Refresh arrows visibility state.
              */
             refresh: function() {
-                var top = parseInt(this.$grid.css('top'), 10);
-                if (top === 0) {
-                    this.$header.hide();
-                } else {
-                    this.$header.show();
-                }
-                var remaining = this.$grid.height() - this.el.height() + top;
-                if (remaining > 0) {
-                    this.$footer.show();
-                } else {
-                    this.$footer.hide();
+                if (Options.get('gridControls')) {
+                    var top = parseInt(this.$grid.css('top'), 10);
+                    if (top === 0) {
+                        this.$header.hide();
+                    } else {
+                        this.$header.show();
+                    }
+                    var remaining = this.$grid.height() - this.el.height() + top;
+                    if (remaining > 0) {
+                        this.$footer.show();
+                    } else {
+                        this.$footer.hide();
+                    }
                 }
             },
 
