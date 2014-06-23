@@ -1,13 +1,10 @@
-# Inspirabbble
-
+# Inspirabbble [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 > Inspire yourself with fresh shots from Dribbble! Inspirabbble let you discover in real-time new shots beautifully arranged in a dynamic grid.
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[View Inspirabbble](http://rmariuzzo.github.io/inspirabbble/).
 
-[Visit Inspirabbble](http://rmariuzzo.github.io/inspirabbble/).
-
-** This project is actively being developed **
+**This project is actively being developed**
 
 ## Want to contribute?
 
