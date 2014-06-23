@@ -3,16 +3,11 @@
 define(
     [
         'jquery',
-        'components/options',
+        'models/options',
         'eventEmitter/EventEmitter',
-        'utils/templates',
+        'hbs!templates/grid',
         'imagesloaded'
-    ], function(
-        $,
-        options,
-        EventEmitter,
-        templates
-    ) {
+    ], function($, options, EventEmitter, template) {
 
         var ee = new EventEmitter();
         var events = {
@@ -23,7 +18,7 @@ define(
 
         var Grid = function(target) {
             this.$target = $(target);
-            this.$template = $(templates.grid());
+            this.$template = $(template());
             this.$target.html(this.$template);
             this.$wrapper = this.$template;
             this.$grid = this.$template.find('.grid');

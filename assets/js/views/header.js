@@ -1,16 +1,18 @@
 'use strict';
 
-define(['jquery', 'utils/templates'], function($, templates) {
+define([
+    'jquery',
+    'hbs!templates/header'
+], function($, template) {
 
     // Class definition //
 
     var Header = function(target) {
         this.$target = $(target);
-        this.$target.html(templates.header());
+        this.$target.html(template());
     };
 
     // Methods //
-
 
     return Header;
 

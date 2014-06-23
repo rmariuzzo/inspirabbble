@@ -5,15 +5,15 @@
 'use strict';
 
 define([
-        'utils/templates',
         'models/dribbble',
-        'components/options',
-        'components/grid',
-        'components/header',
+        'models/options',
+        'views/grid',
+        'views/header',
         'jquery',
-        'backbone'
+        'backbone',
+        'hbs!templates/shot'
     ],
-    function(templates, Dribbble, options, Grid, Header, $, Backbone) {
+    function(Dribbble, Options, Grid, Header, $, Backbone, template) {
 
         var Inspirabbble = Backbone.View.extend({
 
@@ -49,13 +49,13 @@ define([
             refresh: function(callback) {
 
                 // Estimate maximum shots that can fit in screen.
-                var max = +options.get('maxShotsPerRequest');
+                var max = +Options.get('maxShotsPerRequest');
                 if (this.$firstRefresh) {
                     var cols = this.$grid.cols().length;
                     var width = $(window).width() / cols;
                     var height = (3 / 4) * width;
                     var rows = Math.ceil($(window).height() / height);
-                    max = Math.min((cols * rows), +options.get('maxShots'));
+                    max = Math.min((cols * rows), +Options.get('maxShots'));
                 }
 
                 // Get shots.
@@ -89,7 +89,7 @@ define([
                     this.refresh(function() {
                         this.scheduleRefresh();
                     }.bind(this));
-                }.bind(this), +options.get('refreshInterval'));
+                }.bind(this), +Options.get('refreshInterval'));
             },
 
             /**
@@ -103,10 +103,10 @@ define([
 
                     // Add new shots to grid.
                     this.$newShots.forEach(function(shot) {
-                        this.$grid.add(templates.shot({
+                        this.$grid.add(template({
                             shot: shot,
-                            options: {
-                                hd: !!options.get('hd')
+                            Options: {
+                                hd: !!Options.get('hd')
                             }
                         }));
                     }.bind(this));

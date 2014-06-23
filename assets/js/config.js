@@ -13,6 +13,7 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         underscore: '../bower_components/underscore/underscore',
         backbone: '../bower_components/backbone/backbone',
+        thorax: '../bower_components/thorax/thorax.min',
         hbs: '../bower_components/require-handlebars-plugin/hbs',
         imagesloaded: '../bower_components/imagesloaded/imagesloaded',
         'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',
@@ -21,6 +22,7 @@ require.config({
     shim: {
         imagesloaded: ['jquery'],
         backbone: ['underscore', 'jquery'],
+        thorax: ['backbone'],
         underscore: {
             exports: '_'
         }
