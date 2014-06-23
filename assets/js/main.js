@@ -3,12 +3,11 @@
 // Load requirejs configuration.
 require(['config'], function() {
 
-    // Load app when things are ready.
-    require(['app', 'jquery'], function(App, $) {
+    require(['inspirabbble', 'jquery'], function(Inspirabbble, $) {
 
+        // Start Inspirabbble when DOM is ready.
         $(document).ready(function() {
-            var app = new App();
-            app.init();
+            (new Inspirabbble()).start();
         });
 
     });
