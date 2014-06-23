@@ -23,7 +23,9 @@ define([
              * Initialize the app.
              */
             initialize: function() {
-                this.$grid = new Grid('#grid');
+                this.$grid = new Grid({
+                    el: '#grid'
+                });
                 this.$header = new Header('#header');
                 this.$firstRefresh = true;
                 this.$dribbble = new Dribbble();
@@ -113,6 +115,7 @@ define([
 
                     // Allow post-render invocation when grid completes.
                     this.$grid.on('complete', function() {
+                        console.log('completed');
                         callback.call(this);
                     }.bind(this));
                 } else {
