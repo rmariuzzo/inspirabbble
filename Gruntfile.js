@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                     ],
                     resolvers: [{
                         files: ['assets/**/*.js'],
-                        tasks: ['jshint']
+                        tasks: ['newer:jshint:all']
                     }, {
                         files: ['assets/**/*.scss'],
                         tasks: ['sass:dev'],
@@ -56,7 +56,9 @@ module.exports = function(grunt) {
         },
 
         jshint: {
-            files: ['Gruntfile.js', 'assets/js/**/*.js'],
+            all: {
+                src: ['Gruntfile.js', 'assets/js/**/*.js']
+            },
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -168,6 +170,7 @@ module.exports = function(grunt) {
 
     // Setup tasks.
     grunt.registerTask('setup', 'Setup the development environment.', ['githooks']);
+    // Validation tasks.
     grunt.registerTask('validate', 'Validate source files.', ['jshint', 'jsonlint', 'requirejs', 'sass:validate']);
     // Build tasks.
     grunt.registerTask('build:dev', 'Build the development version.', ['copy:resources', 'targethtml:dev', 'sass:dev']);

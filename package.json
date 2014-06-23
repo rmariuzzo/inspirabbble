@@ -30,6 +30,7 @@
     "grunt-fb-flo": "~0.2.1",
     "grunt-githooks": "^0.3.1",
     "grunt-jsonlint": "^1.0.4",
+    "grunt-newer": "^0.7.0",
     "grunt-sass": "~0.10.0",
     "grunt-targethtml": "~0.2.6",
     "load-grunt-tasks": "~0.3.0",
