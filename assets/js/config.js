@@ -13,7 +13,6 @@ require.config({
         'jquery': '../bower_components/jquery/dist/jquery',
         'underscore': '../bower_components/underscore/underscore',
         'backbone': '../bower_components/backbone/backbone',
-        'thorax': '../bower_components/thorax/thorax',
         'hbs': '../bower_components/require-handlebars-plugin/hbs',
         'imagesloaded': '../bower_components/imagesloaded/imagesloaded',
         'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',
@@ -32,10 +31,6 @@ require.config({
         },
         'underscore': {
             exports: '_'
-        },
-        'thorax': {
-            exports: 'Thorax',
-            deps: ['handlebars', 'backbone']
         }
     }
 });

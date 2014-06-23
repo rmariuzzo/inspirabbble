@@ -6,15 +6,8 @@ define(
         'models/options',
         'eventEmitter/EventEmitter',
         'hbs!templates/grid',
-        'imagesloaded',
-        'backbone'
-    ], function($, options, EventEmitter, template, Backbone, Thorax) {
-
-        var Grid = Thorax.View({
-
-            el: '.col:visible'
-
-        });
+        'imagesloaded'
+    ], function($, options, EventEmitter, template) {
 
         var ee = new EventEmitter();
         var events = {
@@ -23,7 +16,7 @@ define(
 
         // Class definition //
 
-        Grid = function(target) {
+        var Grid = function(target) {
             this.$target = $(target);
             this.$template = $(template());
             this.$target.html(this.$template);
