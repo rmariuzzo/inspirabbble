@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
     'use strict';
 
+    var path = require('path');
     require('load-grunt-tasks')(grunt);
 
     // Project configuration.
@@ -39,8 +40,9 @@ module.exports = function(grunt) {
                 options: {
                     hostname: 'localhost',
                     port: 7676,
-                    base: './',
-                    open: true,
+                    base: '..',
+                    directory: path.basename(__dirname),
+                    open: 'http://localhost:7676/' + path.basename(__dirname),
                     keepalive: true
                 }
             }

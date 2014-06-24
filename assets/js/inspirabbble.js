@@ -5,6 +5,7 @@
 'use strict';
 
 define([
+        'router',
         'models/dribbble',
         'models/options',
         'views/grid',
@@ -13,7 +14,7 @@ define([
         'backbone',
         'hbs!templates/shot'
     ],
-    function(Dribbble, Options, Grid, Header, $, Backbone, template) {
+    function(Router, Dribbble, Options, Grid, Header, $, Backbone, template) {
 
         var Inspirabbble = Backbone.View.extend({
 
@@ -32,6 +33,7 @@ define([
                 this.$firstRefresh = true;
                 this.$dribbble = new Dribbble();
                 this.bindEvents();
+                this.initializeRouter();
             },
 
             /**
@@ -138,6 +140,11 @@ define([
                         this.$grid.resize();
                     }.bind(this), 100);
                 }.bind(this));
+            },
+
+            initializeRouter: function() {
+                this.router = new Router();
+                Backbone.history.start();
             }
 
         });
