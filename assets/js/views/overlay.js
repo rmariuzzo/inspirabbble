@@ -25,6 +25,7 @@ define([
          */
         initialize: function() {
             this.el = $(this.el);
+            this.hide();
             this.render();
         },
 
