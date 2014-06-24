@@ -12,6 +12,6 @@ define([
 
     });
 
-    return Router;
+    return new Router();
 
 });

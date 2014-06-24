@@ -7,14 +7,15 @@
 define([
         'router',
         'models/dribbble',
-        'models/options',
+        'views/options',
         'views/grid',
         'views/header',
         'jquery',
+        'underscore',
         'backbone',
         'hbs!templates/shot'
     ],
-    function(Router, Dribbble, Options, Grid, Header, $, Backbone, template) {
+    function(Router, Dribbble, Options, Grid, Header, $, _, Backbone, template) {
 
         var Inspirabbble = Backbone.View.extend({
 
@@ -30,10 +31,10 @@ define([
                 this.$header = new Header({
                     el: '#header'
                 });
-                this.$firstRefresh = true;
                 this.$dribbble = new Dribbble();
                 this.bindEvents();
-                this.initializeRouter();
+                this.setupRoutes();
+                Backbone.history.start();
             },
 
             /**
@@ -54,15 +55,7 @@ define([
              */
             refresh: function(callback) {
 
-                // Estimate maximum shots that can fit in screen.
-                var max = +Options.get('maxShotsPerRequest');
-                if (this.$firstRefresh) {
-                    var cols = this.$grid.cols().length;
-                    var width = $(window).width() / cols;
-                    var height = (3 / 4) * width;
-                    var rows = Math.ceil($(window).height() / height);
-                    max = Math.min((cols * rows), +Options.get('maxShots'));
-                }
+                var max = Math.min(this.estimateMaxShots(), +Options.model.get('maxShotsPerRequest'));
 
                 // Get shots.
                 this.$dribbble.getShotsByList('everyone', 1, max, function(data) {
@@ -79,7 +72,6 @@ define([
 
                     // Render new shots.
                     this.render(function() {
-                        this.$firstRefresh = false;
                         callback.call(this);
                     }.bind(this));
 
@@ -95,7 +87,7 @@ define([
                     this.refresh(function() {
                         this.scheduleRefresh();
                     }.bind(this));
-                }.bind(this), +Options.get('refreshInterval'));
+                }.bind(this), +Options.model.get('refreshInterval'));
             },
 
             /**
@@ -112,7 +104,7 @@ define([
                         this.$grid.add(template({
                             shot: shot,
                             Options: {
-                                hd: !!Options.get('hd')
+                                hd: !!Options.model.get('hd')
                             }
                         }));
                     }.bind(this));
@@ -125,6 +117,23 @@ define([
                 } else {
                     callback.call(this);
                 }
+            },
+
+            /**
+             * Estimate maximum number of shots that would fit into the grid.
+             *
+             * @return number The numer of shots that could fit into the grid.
+             */
+            estimateMaxShots: function() {
+                var calc = _.once(function() {
+                    var cols = this.$grid.cols().length;
+                    var width = $(window).width() / cols;
+                    var height = (3 / 4) * width;
+                    var rows = Math.ceil(this.$grid.el.height() / height);
+                    return cols * rows;
+                }.bind(this));
+
+                return calc();
             },
 
             /**
@@ -142,9 +151,15 @@ define([
                 }.bind(this));
             },
 
-            initializeRouter: function() {
-                this.router = new Router();
-                Backbone.history.start();
+            /**
+             * Setup all the routes.
+             */
+            setupRoutes: function() {
+
+                Router.on('route:settings', function() {
+                    Options.show();
+                });
+
             }
 
         });
