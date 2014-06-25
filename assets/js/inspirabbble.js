@@ -150,6 +150,10 @@ define([
                         this.$grid.resize();
                     }.bind(this), 100);
                 }.bind(this));
+
+                this.listenTo(Options, 'hide', function() {
+                    Router.navigate('/');
+                });
             },
 
             /**

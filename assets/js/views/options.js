@@ -12,6 +12,10 @@ define([
 
         el: 'body',
 
+        events: {
+            'click .dialog-close': 'hide'
+        },
+
         template: $(template()),
 
         initialize: function() {
@@ -20,6 +24,7 @@ define([
             this.overlay = new Overlay();
             this.hide();
             this.render();
+            this.bindEvents();
         },
 
         render: function() {
@@ -32,7 +37,15 @@ define([
         },
 
         hide: function() {
+            this.overlay.hide();
             this.template.hide();
+            this.trigger('hide');
+        },
+
+        bindEvents: function() {
+            this.listenTo(this.overlay, 'click', function() {
+                this.hide();
+            });
         }
 
     });

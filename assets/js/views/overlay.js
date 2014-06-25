@@ -17,7 +17,7 @@ define([
         template: $(template()),
 
         events: {
-            'click .overlay': 'hide'
+            'click .overlay': 'click'
         },
 
         /**
@@ -44,6 +44,10 @@ define([
 
         hide: function() {
             this.template.hide();
+        },
+
+        click: function() {
+            this.trigger('click');
         }
 
     });

@@ -12,6 +12,7 @@ require.config({
         'jquery': '../bower_components/jquery/dist/jquery',
         'underscore': '../bower_components/underscore/underscore',
         'backbone': '../bower_components/backbone/backbone',
+        'backbone.localStorage': '../bower_components/backbone.localStorage/backbone.localStorage',
         'hbs': '../bower_components/require-handlebars-plugin/hbs',
         'imagesloaded': '../bower_components/imagesloaded/imagesloaded',
         'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',

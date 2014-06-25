@@ -2,6 +2,7 @@
 
 define([
     'backbone',
+    'backbone.localStorage'
 ], function(Backbone) {
 
     // Default options.
@@ -14,10 +15,21 @@ define([
         gridControls: false
     };
 
+    // var schema = {
+    //     maxShotsPerRequest: ['required', 'numeric', 'min:1', 'max:30'],
+    //     refreshInterval: ['required', 'numeric', 'min:1000', 'max:1800000'],
+    //     maxShots: ['required', 'numeric', 'min:1'],
+    //     gridColumns: ['required', 'numeric', 'min:1'],
+    //     hd: ['required', 'boolean'],
+    //     gridControls: ['required', 'boolean']
+    // };
+
     var Options = Backbone.Model.extend({
 
+        localStorage: new Backbone.LocalStorage('options'),
+
         initialize: function() {
-            this.loadUserOptions();
+            this.$options = defaults;
         },
 
         /**
@@ -29,21 +41,21 @@ define([
          */
         get: function(key) {
             return this.$options[key];
-        },
-
-        /**
-         * Load user options from localStorage.
-         */
-        loadUserOptions: function() {
-            this.$options = JSON.parse(localStorage.options || null) || defaults;
-        },
-
-        /**
-         * Save user options to localStorage.
-         */
-        saveUserOptions: function() {
-            localStorage.options = JSON.stringify(this.$options);
         }
+
+        // /**
+        //  * Load user options from localStorage.
+        //  */
+        // loadUserOptions: function() {
+        //     this.$options = JSON.parse(localStorage.options || null) || defaults;
+        // },
+
+        // /**
+        //  * Save user options to localStorage.
+        //  */
+        // saveUserOptions: function() {
+        //     localStorage.options = JSON.stringify(this.$options);
+        // }
 
     });
 
