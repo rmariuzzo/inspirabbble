@@ -44,7 +44,7 @@ define([
                 var rule = rules[key][i];
 
                 // Validate the given rule with the given value.
-                this.validate(rule.name, value, key, rule.params);
+                this.validate(rule.name, value, rule.params, key);
             }
         }
 
@@ -81,7 +81,7 @@ define([
         return data;
     };
 
-    Validator.prototype.validate = function(rule, value, key, params) {
+    Validator.prototype.validate = function(rule, value, params, key) {
 
         // Check if a validator exists for the given rule.
         var validator = this.validators[rule];
@@ -90,7 +90,7 @@ define([
         }
 
         // Run validator for given rule.
-        var validation = validator.call(null, value, key, params);
+        var validation = validator.call(null, value, params, key);
 
         // Analyze validation result.
         if (validation !== true) {
