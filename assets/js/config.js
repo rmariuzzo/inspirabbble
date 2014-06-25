@@ -6,7 +6,6 @@
 
 require.config({
     waitSeconds: 0,
-    // baseUrl: '/assets/js/',
     paths: {
         'text': '../bower_components/requirejs-text/text',
         'handlebars': '../bower_components/handlebars/handlebars',

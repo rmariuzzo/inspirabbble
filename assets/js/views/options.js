@@ -17,6 +17,7 @@ define([
         initialize: function() {
             this.el = $(this.el);
             this.model = model;
+            this.overlay = new Overlay();
             this.hide();
             this.render();
         },
@@ -26,6 +27,7 @@ define([
         },
 
         show: function() {
+            this.overlay.show();
             this.template.show();
         },
 

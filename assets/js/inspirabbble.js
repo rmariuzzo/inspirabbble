@@ -13,7 +13,8 @@ define([
         'jquery',
         'underscore',
         'backbone',
-        'hbs!templates/shot'
+        'hbs!templates/shot',
+        'utils/validator-commons'
     ],
     function(Router, Dribbble, Options, Grid, Header, $, _, Backbone, template) {
 
