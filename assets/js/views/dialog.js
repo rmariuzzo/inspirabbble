@@ -13,10 +13,7 @@ define([
 ], function(Overlay, template, $, _, Backbone) {
 
     var Dialog = Backbone.View.extend({
-
-        /**
-         * The element where the dialog view will be rendered.
-         */
+        
         el: 'body',
 
         /**
@@ -65,14 +62,15 @@ define([
         initialize: function(data) {
             this.el = $(this.el);
             this.data = _.extend(this.data, data);
-            this.overlay = new Overlay();
             this.render();
+            this.listenTo(this.overlay, 'click', this.hide);
         },
 
         /**
          * Render the dialog once into the DOM.
          */
         render: function() {
+            this.overlay = new Overlay();
             // Check if the dialog was already rendered.
             if (this.el.has(this.view).length === 0) {
                 // Render the template.
@@ -88,17 +86,32 @@ define([
          * Show the dialog.
          */
         show: function() {
+            if (!this.isHidden()) {
+                return; // Nothing to do here.
+            }
             this.overlay.show();
             this.view.show();
+            this.delegateEvents();
         },
 
         /**
          * Hide the dialog.
          */
         hide: function() {
+            if (this.isHidden()) {
+                return; // Nothing to do here.
+            }
             this.overlay.hide();
             this.view.hide();
+            this.undelegateEvents();
             this.trigger('hide');
+        },
+
+        /**
+         * Indicate if the the dialog is hidden.
+         */
+        isHidden: function() {
+            return this.view.is(':hidden');
         }
 
     });

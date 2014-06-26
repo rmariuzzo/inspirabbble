@@ -1,3 +1,6 @@
+/**
+ * The router object.
+ */
 'use strict';
 
 define([
@@ -7,6 +10,7 @@ define([
     var Router = Backbone.Router.extend({
 
         routes: {
+            '': 'home',
             'settings': 'settings'
         }
 

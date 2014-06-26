@@ -3,11 +3,11 @@
 define(
     [
         'jquery',
-        'models/options',
+        'models/settings',
         'hbs!templates/grid',
         'backbone',
         'imagesloaded'
-    ], function($, Options, template, Backbone) {
+    ], function($, Settings, template, Backbone) {
 
         var events = {
             complete: 'complete'
@@ -132,7 +132,7 @@ define(
              * Refresh arrows visibility state.
              */
             refresh: function() {
-                if (Options.get('gridControls')) {
+                if (Settings.get('gridControls')) {
                     var top = parseInt(this.$grid.css('top'), 10);
                     if (top === 0) {
                         this.$header.hide();

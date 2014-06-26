@@ -24,12 +24,12 @@ define([
     //     gridControls: ['required', 'boolean']
     // };
 
-    var Options = Backbone.Model.extend({
+    var Settings = Backbone.Model.extend({
 
-        localStorage: new Backbone.LocalStorage('options'),
+        localStorage: new Backbone.LocalStorage('settings'),
 
         initialize: function() {
-            this.$options = defaults;
+            this.$settings = defaults;
         },
 
         /**
@@ -40,25 +40,25 @@ define([
          * @return string The value of the option or undefined
          */
         get: function(key) {
-            return this.$options[key];
+            return this.$settings[key];
         }
 
         // /**
-        //  * Load user options from localStorage.
+        //  * Load user settings from localStorage.
         //  */
-        // loadUserOptions: function() {
-        //     this.$options = JSON.parse(localStorage.options || null) || defaults;
+        // loadUsersettings: function() {
+        //     this.$settings = JSON.parse(localStorage.settings || null) || defaults;
         // },
 
         // /**
-        //  * Save user options to localStorage.
+        //  * Save user settings to localStorage.
         //  */
-        // saveUserOptions: function() {
-        //     localStorage.options = JSON.stringify(this.$options);
+        // saveUsersettings: function() {
+        //     localStorage.settings = JSON.stringify(this.$settings);
         // }
 
     });
 
-    return new Options();
+    return new Settings();
 
 });

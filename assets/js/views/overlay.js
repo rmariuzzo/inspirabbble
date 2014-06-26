@@ -26,7 +26,7 @@ define([
          * Events.
          */
         events: {
-            'click .overlay': 'clickOverlay'
+            'click .overlay': 'click'
         },
 
         /**
@@ -68,8 +68,8 @@ define([
         /**
          * Handle click on overlay.
          */
-        clickOverlay: function() {
-            this.trigger('hide');
+        click: function() {
+            this.trigger('click');
         }
 
     });
