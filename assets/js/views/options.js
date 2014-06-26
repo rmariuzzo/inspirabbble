@@ -24,7 +24,6 @@ define([
             this.overlay = new Overlay();
             this.hide();
             this.render();
-            this.bindEvents();
         },
 
         render: function() {
@@ -40,12 +39,6 @@ define([
             this.overlay.hide();
             this.template.hide();
             this.trigger('hide');
-        },
-
-        bindEvents: function() {
-            this.listenTo(this.overlay, 'click', function() {
-                this.hide();
-            });
         }
 
     });

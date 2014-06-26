@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                             contentsPath: 'assets/css/main.css'
                         }
                     }, {
-                        files: ['views/**/*.html', 'views/**/*.hbs'],
+                        files: ['views/**/*.html', 'assets/**/*.hbs'],
                         tasks: ['targethtml:dev'],
                         callback: {
                             reload: true

@@ -20,6 +20,7 @@
     font-size: 18px;
     font-weight: bold;
     color: #888;
+    height: 42px;
 }
 
 .dialog-close {
@@ -58,4 +59,8 @@
             border-color: #000;
         }
     }
+}
+
+.dialog-content {
+    padding: 10px 20px;
 }

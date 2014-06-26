@@ -14,7 +14,7 @@ define([
         'underscore',
         'backbone',
         'hbs!templates/shot',
-        'utils/validator-commons'
+        'views/dialog'
     ],
     function(Router, Dribbble, Options, Grid, Header, $, _, Backbone, template) {
 
@@ -36,6 +36,11 @@ define([
                 this.bindEvents();
                 this.setupRoutes();
                 Backbone.history.start();
+            },
+
+            remove: function() {
+                $(window).off('resize.inspirabbble');
+                Backbone.View.prototype.remove.apply(this, arguments);
             },
 
             /**
@@ -143,7 +148,7 @@ define([
             bindEvents: function() {
 
                 // Handle resize event
-                $(window).on('resize', function() {
+                $(window).on('resize.inspirabbble', function() {
                     clearTimeout(this.$resizeTimeout);
                     this.$resizeTimeout = setTimeout(function() {
                         this.$grid.refresh();

@@ -5,19 +5,28 @@
 'use strict';
 
 define([
-    'backbone',
     'jquery',
+    'backbone',
     'hbs!templates/overlay'
-], function(Backbone, $, template) {
+], function($, Backbone, template) {
 
     var Overlay = Backbone.View.extend({
 
+        /**
+         * The element where overlay will be attached.
+         */
         el: 'body',
 
+        /**
+         * The template.
+         */
         template: $(template()),
 
+        /**
+         * Events.
+         */
         events: {
-            'click .overlay': 'click'
+            'click .overlay': 'clickOverlay'
         },
 
         /**
@@ -38,16 +47,29 @@ define([
             }
         },
 
+        /**
+         * Show the overlay.
+         */
         show: function() {
             this.template.show();
+            this.delegateEvents();
         },
 
+        /**
+         * Hide the overlay.
+         */
         hide: function() {
             this.template.hide();
+            this.undelegateEvents();
         },
 
-        click: function() {
-            this.trigger('click');
+        // Event handlers //
+
+        /**
+         * Handle click on overlay.
+         */
+        clickOverlay: function() {
+            this.trigger('hide');
         }
 
     });
