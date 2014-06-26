@@ -5,7 +5,7 @@ define([
     'backbone.localStorage'
 ], function(Backbone) {
 
-    // Default options.
+    // Default settings.
     var defaults = {
         maxShotsPerRequest: 30,
         refreshInterval: 5000,
@@ -15,7 +15,7 @@ define([
         gridControls: false
     };
 
-    // var schema = {
+    // var rules = {
     //     maxShotsPerRequest: ['required', 'numeric', 'min:1', 'max:30'],
     //     refreshInterval: ['required', 'numeric', 'min:1000', 'max:1800000'],
     //     maxShots: ['required', 'numeric', 'min:1'],
@@ -23,6 +23,33 @@ define([
     //     hd: ['required', 'boolean'],
     //     gridControls: ['required', 'boolean']
     // };
+
+    var schema = {
+        maxShotsPerRequest: {
+            type: 'text',
+            label: 'Max shots per request'
+        },
+        refreshInterval: {
+            type: 'text',
+            label: 'Refresh Interval'
+        },
+        maxShots: {
+            type: 'text',
+            label: 'Max shots'
+        },
+        gridColumns: {
+            type: 'text',
+            label: 'Number of columns'
+        },
+        hd: {
+            type: 'text',
+            label: 'HD shots?'
+        },
+        gridControls: {
+            type: 'text',
+            label: 'Show controls?'
+        }
+    };
 
     var Settings = Backbone.Model.extend({
 
@@ -41,7 +68,7 @@ define([
          */
         get: function(key) {
             return this.$settings[key];
-        }
+        },
 
         // /**
         //  * Load user settings from localStorage.
@@ -56,6 +83,10 @@ define([
         // saveUsersettings: function() {
         //     localStorage.settings = JSON.stringify(this.$settings);
         // }
+
+        getSchema: function() {
+            return schema;
+        }
 
     });
 

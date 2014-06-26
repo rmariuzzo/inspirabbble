@@ -1,12 +1,14 @@
 'use strict';
 
 define([
-    'backbone',
     'jquery',
+    'underscore',
+    'backbone',
     'views/dialog',
     'models/settings',
-    'hbs!templates/settings'
-], function(Backbone, $, Dialog, model, template) {
+    'hbs!templates/settings',
+    'templates/helpers/form'
+], function($, _, Backbone, Dialog, model, template) {
 
     var Settings = Backbone.View.extend({
 
@@ -24,7 +26,7 @@ define([
         render: function() {
             this.dialog = new Dialog({
                 title: 'Setttings',
-                content: this.template()
+                content: this.template(_.toArray(this.model.getSchema()))
             });
             this.hide();
         },
