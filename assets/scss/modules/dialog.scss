@@ -1,5 +1,6 @@
 
 .dialog {
+    @include fadeIn(.3s, 0, ease-in, both, hidden);
     @include border-radius(3px);
     @include box-shadow(0 0 8px 4px rgba(#000, .3));
     width: 40%;
