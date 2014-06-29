@@ -1,22 +1,11 @@
 module.exports = function(grunt) {
     'use strict';
 
+    var path = require('path');
     require('load-grunt-tasks')(grunt);
-
-    var minimatch = require('minimatch');
 
     // Project configuration.
     grunt.initConfig({
-
-        watch: {
-            dev: {
-                files: ['Gruntfile.js', 'assets/scss/**/*', 'assets/js/**/*', 'assets/img/**/*', 'views/**/*'],
-                tasks: ['jshint', 'sass:dev', 'targethtml:dev'],
-                options: {
-                    livereload: 39999
-                }
-            }
-        },
 
         flo: {
             serve: {
@@ -25,57 +14,23 @@ module.exports = function(grunt) {
                     glob: [
                         '!**/.subl*.tmp'
                     ],
-                    resolver: function(filepath, callback) {
-
-                        var fs = require('fs');
-
-                        var targets = [{
-                            files: [
-                                'assets/**/*.js'
-                            ],
-                            tasks: ['jshint'],
-                            callback: {
-                                resourceURL: filepath,
-                                contentsPath: filepath
-                            }
-                        }, {
-                            files: [
-                                'assets/**/*.scss'
-                            ],
-                            tasks: ['sass:dev'],
-                            callback: {
-                                resourceURL: 'assets/css/main.css',
-                                contentsPath: 'assets/css/main.css'
-                            }
-                        }];
-
-                        targets.forEach(function(target) {
-                            var match = target.files.some(function(pattern) {
-                                return minimatch(filepath, pattern);
-                            });
-
-                            if (!match) {
-                                return;
-                            }
-
-                            grunt.log.writeln('File: ' + filepath + ' changed!');
-
-                            grunt.util.spawn({
-                                grunt: true,
-                                args: [target.tasks.join(' ')]
-                            }, function(error, result) {
-                                if (error) {
-                                    grunt.log.error(result);
-                                    return;
-                                }
-                                grunt.log.writeln(result);
-                                callback({
-                                    resourceURL: target.callback.resourceURL,
-                                    contents: fs.readFileSync(target.callback.contentsPath)
-                                });
-                            });
-                        });
-                    }
+                    resolvers: [{
+                        files: ['assets/**/*.js'],
+                        tasks: ['newer:jshint:all']
+                    }, {
+                        files: ['assets/**/*.scss'],
+                        tasks: ['sass:dev'],
+                        callback: {
+                            resourceURL: 'assets/css/main.css',
+                            contentsPath: 'assets/css/main.css'
+                        }
+                    }, {
+                        files: ['views/**/*.html', 'assets/**/*.hbs'],
+                        tasks: ['targethtml:dev'],
+                        callback: {
+                            reload: true
+                        }
+                    }]
                 }
             }
         },
@@ -85,8 +40,9 @@ module.exports = function(grunt) {
                 options: {
                     hostname: 'localhost',
                     port: 7676,
-                    base: './',
-                    open: true,
+                    base: '..',
+                    directory: path.basename(__dirname),
+                    open: 'http://localhost:7676/' + path.basename(__dirname),
                     keepalive: true
                 }
             }
@@ -102,7 +58,9 @@ module.exports = function(grunt) {
         },
 
         jshint: {
-            files: ['Gruntfile.js', 'assets/js/**/*.js'],
+            all: {
+                src: ['Gruntfile.js', 'assets/js/**/*.js']
+            },
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -137,12 +95,20 @@ module.exports = function(grunt) {
                     outputStyle: 'nested'
                 }
             },
-            build: {
+            prod: {
                 files: {
                     'assets/dist/main.css': 'assets/scss/main.scss'
                 },
                 options: {
                     outputStyle: 'compressed'
+                }
+            },
+            validate: {
+                files: {
+                    'assets/css/main.css': 'assets/scss/main.scss'
+                },
+                options: {
+                    check: true
                 }
             }
         },
@@ -164,7 +130,7 @@ module.exports = function(grunt) {
                     'index.html': 'views/index.html'
                 }
             },
-            build: {
+            prod: {
                 files: {
                     'index.html': 'views/index.html'
                 }
@@ -181,14 +147,36 @@ module.exports = function(grunt) {
                     filter: 'isFile'
                 }]
             }
+        },
+
+        githooks: {
+            all: {
+                'pre-commit': 'validate'
+            }
+        },
+
+        jsonlint: {
+            all: {
+                src: [
+                    '.bowerrc',
+                    '.jshintrc',
+                    'bower.json',
+                    'package.json'
+                ]
+            }
         }
+
     });
 
     // Grunt task registration //
 
+    // Setup tasks.
+    grunt.registerTask('setup', 'Setup the development environment.', ['githooks']);
+    // Validation tasks.
+    grunt.registerTask('validate', 'Validate source files.', ['jshint', 'jsonlint', 'requirejs', 'sass:validate']);
     // Build tasks.
     grunt.registerTask('build:dev', 'Build the development version.', ['copy:resources', 'targethtml:dev', 'sass:dev']);
-    grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:build', 'copy:resources', 'targethtml:build', 'imagemin']);
+    grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:prod', 'copy:resources', 'targethtml:prod', 'imagemin']);
     grunt.registerTask('build', ['build:prod']);
     // Serve tasks.
     grunt.registerTask('serve:dev', 'Serve the application in development mode.', ['build:dev', 'concurrent:serve']);
