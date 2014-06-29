@@ -6,7 +6,7 @@
 
 define([
         'router',
-        'models/dribbble',
+        'collections/shots',
         'views/settings',
         'views/grid',
         'views/header',
@@ -15,7 +15,7 @@ define([
         'backbone',
         'hbs!templates/shot'
     ],
-    function(Router, Dribbble, Settings, Grid, Header, $, _, Backbone, template) {
+    function(Router, Shots, Settings, Grid, Header, $, _, Backbone, template) {
 
         var Inspirabbble = Backbone.View.extend({
 
@@ -31,7 +31,7 @@ define([
                 this.$header = new Header({
                     el: '#header'
                 });
-                this.$dribbble = new Dribbble();
+                this.$dribbble = new Shots();
                 this.bindEvents();
                 this.setupRoutes();
                 Backbone.history.start({
@@ -62,27 +62,29 @@ define([
              */
             refresh: function(callback) {
 
-                var max = Math.min(this.estimateMaxShots(), +Settings.model.get('maxShotsPerRequest'));
+                // var max = Math.min(this.estimateMaxShots(), +Settings.model.get('maxShotsPerRequest'));
 
                 // Get shots.
-                this.$dribbble.getShotsByList('everyone', 1, max, function(data) {
+                this.$dribbble.fetchShotsByList('everyone', {
+                    success: function(data) {
 
-                    // Store and filter new shots.
-                    this.$newShots = $.grep(data, function(shot) {
-                        if (this.$shots[shot.id]) {
-                            return false;
-                        } else {
-                            this.$shots[shot.id] = shot;
-                            return true;
-                        }
-                    }.bind(this));
+                        // Store and filter new shots.
+                        this.$newShots = $.grep(data.models, function(shot) {
+                            if (this.$shots[shot.id]) {
+                                return false;
+                            } else {
+                                this.$shots[shot.id] = shot;
+                                return true;
+                            }
+                        }.bind(this));
 
-                    // Render new shots.
-                    this.render(function() {
-                        callback.call(this);
-                    }.bind(this));
+                        // Render new shots.
+                        this.render(function() {
+                            callback.call(this);
+                        }.bind(this));
 
-                }.bind(this));
+                    }.bind(this)
+                });
             },
 
             /**
@@ -109,7 +111,7 @@ define([
                     // Add new shots to grid.
                     this.$newShots.forEach(function(shot) {
                         this.$grid.add(template({
-                            shot: shot,
+                            shot: shot.toJSON(),
                             options: {
                                 hd: !!Settings.model.get('hd')
                             }
