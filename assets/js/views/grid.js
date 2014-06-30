@@ -1,13 +1,17 @@
+/**
+ * The grid view.
+ */
+
 'use strict';
 
 define(
     [
-        'jquery',
         'models/settings',
         'hbs!templates/grid',
+        'jquery',
         'backbone',
         'imagesloaded'
-    ], function($, Settings, template, Backbone) {
+    ], function(Settings, template, $, Backbone) {
 
         var events = {
             complete: 'complete'
@@ -15,7 +19,15 @@ define(
 
         var Grid = Backbone.View.extend({
 
-            template: $(template()),
+            template: template,
+
+            events: {
+                'touchstart': 'touchstatHandler',
+                'mousewheel': 'mousewheelHandler',
+                'DOMMouseScroll': 'domMouseScrollHandler'
+            },
+
+            touched: false,
 
             /**
              * Initialize the grid view.
@@ -23,11 +35,6 @@ define(
             initialize: function() {
                 this.el = $(this.el);
                 this.render();
-                this.$grid = this.$('.grid');
-                this.$header = this.$('header');
-                this.$footer = this.$('footer');
-                this.$prev = this.$('.prev');
-                this.$next = this.$('.next');
                 this.$queue = 0;
                 this.resize();
                 this.bindEvents();
@@ -38,7 +45,13 @@ define(
              * Render this view.
              */
             render: function() {
-                this.el.html(this.template);
+                this.el.html(this.template());
+                this.$wrapper = this.$('.grid-wrapper');
+                this.$grid = this.$('.grid');
+                this.$header = this.$('header');
+                this.$footer = this.$('footer');
+                this.$prev = this.$('.prev');
+                this.$next = this.$('.next');
             },
 
             /**
@@ -68,9 +81,12 @@ define(
              * Resize the view.
              */
             resize: function() {
+                if (this.touched) {
+                    return; // Nothing to do here.
+                }
                 // The following line should not be there.
                 this.el.height($(window).height() - (this.el.outerHeight(true) - this.el.height()));
-                this.template.height(this.el.height());
+                this.$wrapper.height(this.el.height());
                 this.$footer.css('top', this.el.height() - this.$footer.height());
             },
 
@@ -82,7 +98,7 @@ define(
                 var col = cols.first();
                 cols.each(function() {
                     var $this = $(this);
-                    col = col.height() < $this.height() ? col : $this;
+                    col = col.children().length <= $this.children().length ? col : $this;
                 });
                 col.prepend(html);
             },
@@ -152,32 +168,14 @@ define(
              * Bind events.
              */
             bindEvents: function() {
-                this.$prev.on('click', function(event) {
+                this.listenTo(this.$prev, 'click', function(event) {
                     event.preventDefault();
                     this.prev();
                 }.bind(this));
 
-                this.$next.on('click', function(event) {
+                this.listenTo(this.$next, 'click', function(event) {
                     event.preventDefault();
                     this.next();
-                }.bind(this));
-
-                this.template.on('DOMMouseScroll', function(event) {
-                    event.preventDefault();
-                    if (event.originalEvent.detail > 0) {
-                        this.next();
-                    } else {
-                        this.prev();
-                    }
-                }.bind(this));
-
-                this.template.on('mousewheel', function(event) {
-                    event.preventDefault();
-                    if (event.originalEvent.wheelDelta < 0) {
-                        this.next();
-                    } else {
-                        this.prev();
-                    }
                 }.bind(this));
             },
 
@@ -186,6 +184,40 @@ define(
                     this.refresh();
                 }.bind(this), 300);
             },
+
+            // Event handlers //
+
+            mousewheelHandler: function(event) {
+                if (this.touched) {
+                    return; // Nothing to do here.
+                }
+                event.preventDefault();
+                if (event.originalEvent.wheelDelta < 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            },
+
+            domMouseScrollHandler: function(event) {
+                if (this.touched) {
+                    return; // Nothing to do here.
+                }
+                event.preventDefault();
+                if (event.originalEvent.detail > 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            },
+
+            touchstatHandler: function() {
+                if (!this.touched) {
+                    this.el.css('height', 'auto');
+                    this.$wrapper.css('height', 'auto');
+                }
+                this.touched = true;
+            }
 
         });
 

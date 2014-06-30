@@ -95,59 +95,88 @@ define([
          * Fetch shot rebounds.
          *
          * @param id number The id of the shot.
+         * @param page number The page to fetch.
+         * @param size number The number of shots to fetch.
          * @param options object The fetch options.
          */
-        fetchRebounds: function(id, options) {
+        fetchRebounds: function(id, page, size, options) {
             this.id = id;
             this.endpoint = '/shots/:id/rebounds';
-            this.fetch(options);
+            this.fetchWithPagination(page, size, options);
         },
 
         /**
          * Fetch shots in a list.
          *
          * @param list strign The name of the list.
+         * @param page number The page to fetch.
+         * @param size number The number of shots to fetch.
          * @param options object The fetch options.
          */
-        fetchShotsByList: function(list, options) {
+        fetchShotsByList: function(list, page, size, options) {
             this.id = list;
             this.endpoint = '/shots/:list';
-            this.fetch(options);
+            this.fetchWithPagination(page, size, options);
         },
 
         /**
          * Fetch shots from a player.
          *
          * @param id number The id of the player.
+         * @param page number The page to fetch.
+         * @param size number The number of shots to fetch.
          * @param options object The fetch options.
          */
-        fetchShots: function(id, options) {
+        fetchShots: function(id, page, size, options) {
             this.id = id;
             this.endpoint = '/players/:id/shots';
-            this.fetch(options);
+            this.fetchWithPagination(page, size, options);
         },
 
         /**
          * Fetch shots followed by a player
          *
          * @param id number The id of the player.
+         * @param page number The page to fetch.
+         * @param size number The number of shots to fetch.
          * @param options object The fetch options.
          */
-        fetchShotsFollowing: function(id, options) {
+        fetchShotsFollowing: function(id, page, size, options) {
             this.id = id;
             this.endpoint = '/players/:id/shots/following';
-            this.fetch(options);
+            this.fetchWithPagination(page, size, options);
         },
 
         /**
          * Fetch shots liked by a player.
          *
          * @param id number The id of the player.
+         * @param page number The page to fetch.
+         * @param size number The number of shots to fetch.
          * @param options object The fetch options.
          */
-        fetchShotsLiked: function(id, options) {
+        fetchShotsLiked: function(id, page, size, options) {
             this.id = id;
             this.endpoint = '/players/:id/shots/likes';
+            this.fetchWithPagination(page, size, options);
+        },
+
+        /**
+         * Fetch shots with pagination data.
+         *
+         * @param page number The page to fetch.
+         * @param size number The number of shots to fetch.
+         * @param options object The fetch options.
+         */
+        fetchWithPagination: function(page, size, options) {
+            /* jshint -W106 */
+            options = _.extend(options, {
+                data: {
+                    page: page,
+                    per_page: size
+                }
+            });
+            /* jshint +W106 */
             this.fetch(options);
         }
 

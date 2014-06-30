@@ -7,8 +7,8 @@
 // Load requirejs configuration.
 require(['config'], function() {
 
-    // Load Inspirabbble app and jQuery.
-    require(['inspirabbble', 'jquery'], function(Inspirabbble, $) {
+    // Load Inspirabbble app, jQuery and Modernizr.
+    require(['inspirabbble', 'jquery', 'modernizr'], function(Inspirabbble, $) {
 
         // Start Inspirabbble when DOM is ready.
         $(document).ready(function() {

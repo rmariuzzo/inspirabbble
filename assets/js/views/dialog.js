@@ -7,13 +7,14 @@
 define([
     'views/overlay',
     'hbs!templates/dialog',
+    'utils/animationend',
     'jquery',
     'underscore',
     'backbone'
-], function(Overlay, template, $, _, Backbone) {
+], function(Overlay, template, animationend, $, _, Backbone) {
 
     var Dialog = Backbone.View.extend({
-        
+
         el: 'body',
 
         /**
@@ -76,7 +77,7 @@ define([
                 // Render the template.
                 this.view = $(this.template(this.data));
                 // The dialog should be hidden by default.
-                this.hide();
+                this.view.hide();
                 // Append the rendered view into the DOM.
                 this.el.append(this.view);
             }
@@ -90,7 +91,9 @@ define([
                 return; // Nothing to do here.
             }
             this.overlay.show();
-            this.view.show();
+            this.view
+                .removeClass('hidden')
+                .show();
             this.delegateEvents();
         },
 
@@ -98,11 +101,19 @@ define([
          * Hide the dialog.
          */
         hide: function() {
+            // Check if already hidden.
             if (this.isHidden()) {
                 return; // Nothing to do here.
             }
+            // Hide the overlay.
             this.overlay.hide();
-            this.view.hide();
+            // Hide the dialog with animation.
+            this.view
+                .one(animationend, function() {
+                    this.view.hide();
+                }.bind(this))
+                .addClass('hidden');
+            // Undelegate and trigger event.
             this.undelegateEvents();
             this.trigger('hide');
         },
@@ -111,7 +122,7 @@ define([
          * Indicate if the the dialog is hidden.
          */
         isHidden: function() {
-            return this.view.is(':hidden');
+            return this.view.is('.hidden, :hidden');
         }
 
     });

@@ -16,7 +16,8 @@ require.config({
         'hbs': '../bower_components/require-handlebars-plugin/hbs',
         'imagesloaded': '../bower_components/imagesloaded/imagesloaded',
         'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',
-        'eventie/eventie': '../bower_components/eventie/eventie'
+        'eventie/eventie': '../bower_components/eventie/eventie',
+        'modernizr': '../bower_components/modernizr/modernizr'
     },
     shim: {
         'imagesloaded': {
@@ -31,6 +32,12 @@ require.config({
         },
         'underscore': {
             exports: '_'
+        },
+        'jquery.nicescroll': {
+            deps: ['jquery']
+        },
+        'modernizr': {
+            exports: 'Modernizr'
         }
     }
 });
