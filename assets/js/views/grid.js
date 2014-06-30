@@ -21,6 +21,11 @@ define(
 
             template: template,
 
+            events: {
+                'mousewheel': 'mousewheelHandler',
+                'DOMMouseScroll': 'domMouseScrollHandler'
+            },
+
             /**
              * Initialize the grid view.
              */
@@ -166,24 +171,6 @@ define(
                     event.preventDefault();
                     this.next();
                 }.bind(this));
-
-                this.listenTo(this.$wrapper, 'DOMMouseScroll', function(event) {
-                    event.preventDefault();
-                    if (event.originalEvent.detail > 0) {
-                        this.next();
-                    } else {
-                        this.prev();
-                    }
-                }.bind(this));
-
-                this.listenTo(this.$wrapper, 'mousewheel', function(event) {
-                    event.preventDefault();
-                    if (event.originalEvent.wheelDelta < 0) {
-                        this.next();
-                    } else {
-                        this.prev();
-                    }
-                }.bind(this));
             },
 
             startTimers: function() {
@@ -191,6 +178,26 @@ define(
                     this.refresh();
                 }.bind(this), 300);
             },
+
+            // Event handlers //
+
+            mousewheelHandler: function(event) {
+                event.preventDefault();
+                if (event.originalEvent.wheelDelta < 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            },
+
+            domMouseScrollHandler: function(event) {
+                event.preventDefault();
+                if (event.originalEvent.detail > 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }
 
         });
 
