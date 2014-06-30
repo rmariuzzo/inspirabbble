@@ -25,12 +25,13 @@ define([
              * Initialize the app.
              */
             initialize: function() {
-                this.$grid = new Grid({
-                    el: '#grid'
-                });
                 this.$header = new Header({
                     el: '#header'
                 });
+                this.$grid = new Grid({
+                    el: '#grid'
+                });
+                this.$grid.el.css('padding-top', this.$header.$('.header').css('height'));
                 this.$dribbble = new Shots();
                 this.bindEvents();
                 this.setupRoutes();
@@ -62,10 +63,10 @@ define([
              */
             refresh: function(callback) {
 
-                // var max = Math.min(this.estimateMaxShots(), +Settings.model.get('maxShotsPerRequest'));
+                var max = Math.min(this.estimateMaxShots(), +Settings.model.get('maxShotsPerRequest'));
 
                 // Get shots.
-                this.$dribbble.fetchShotsByList('everyone', {
+                this.$dribbble.fetchShotsByList('everyone', 1, max, {
                     success: function(data) {
 
                         // Store and filter new shots.
