@@ -19,7 +19,7 @@ define(
 
         var Grid = Backbone.View.extend({
 
-            template: $(template()),
+            template: template,
 
             /**
              * Initialize the grid view.
@@ -27,6 +27,7 @@ define(
             initialize: function() {
                 this.el = $(this.el);
                 this.render();
+                this.$wrapper = this.$('.grid-wrapper');
                 this.$grid = this.$('.grid');
                 this.$header = this.$('header');
                 this.$footer = this.$('footer');
@@ -42,7 +43,7 @@ define(
              * Render this view.
              */
             render: function() {
-                this.el.html(this.template);
+                this.el.html(this.template());
             },
 
             /**
@@ -74,7 +75,7 @@ define(
             resize: function() {
                 // The following line should not be there.
                 this.el.height($(window).height() - (this.el.outerHeight(true) - this.el.height()));
-                this.template.height(this.el.height());
+                this.$wrapper.height(this.el.height());
                 this.$footer.css('top', this.el.height() - this.$footer.height());
             },
 
@@ -156,17 +157,17 @@ define(
              * Bind events.
              */
             bindEvents: function() {
-                this.$prev.on('click', function(event) {
+                this.listenTo(this.$prev, 'click', function(event) {
                     event.preventDefault();
                     this.prev();
                 }.bind(this));
 
-                this.$next.on('click', function(event) {
+                this.listenTo(this.$next, 'click', function(event) {
                     event.preventDefault();
                     this.next();
                 }.bind(this));
 
-                this.template.on('DOMMouseScroll', function(event) {
+                this.listenTo(this.$wrapper, 'DOMMouseScroll', function(event) {
                     event.preventDefault();
                     if (event.originalEvent.detail > 0) {
                         this.next();
@@ -175,7 +176,7 @@ define(
                     }
                 }.bind(this));
 
-                this.template.on('mousewheel', function(event) {
+                this.listenTo(this.$wrapper, 'mousewheel', function(event) {
                     event.preventDefault();
                     if (event.originalEvent.wheelDelta < 0) {
                         this.next();
