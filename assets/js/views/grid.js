@@ -1,3 +1,7 @@
+/**
+ * The grid view.
+ */
+
 'use strict';
 
 define(
