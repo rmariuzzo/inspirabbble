@@ -96,7 +96,8 @@ define([
                     this.refresh(function() {
                         this.scheduleRefresh();
                     }.bind(this));
-                }.bind(this), +Settings.model.get('refreshInterval'));
+                    // }.bind(this), +Settings.model.get('refreshInterval'));
+                }.bind(this), 10 * 1000);
             },
 
             /**
