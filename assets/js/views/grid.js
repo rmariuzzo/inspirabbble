@@ -87,7 +87,7 @@ define(
                 var col = cols.first();
                 cols.each(function() {
                     var $this = $(this);
-                    col = col.height() < $this.height() ? col : $this;
+                    col = col.children().length <= $this.children().length ? col : $this;
                 });
                 col.prepend(html);
             },
