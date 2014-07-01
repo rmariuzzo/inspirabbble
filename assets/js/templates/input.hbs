@@ -1,4 +1,8 @@
 <div class="form-row">
     <label for="{{ id }}">{{ label }}</label>
-    <input type="{{ type }}" name="{{ name }}" value="{{ value }}">
+    {{#if checkbox}}
+        <input type="{{ type }}" name="{{ name }}" value="x" {{#if checked}}checked{{/if}}>
+    {{else}}
+        <input type="{{ type }}" name="{{ name }}" value="{{ value }}">
+    {{/if}}
 </div>

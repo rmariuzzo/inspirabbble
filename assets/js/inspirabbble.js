@@ -7,15 +7,17 @@
 define([
         'router',
         'collections/shots',
+        'collections/settings',
         'views/settings',
         'views/grid',
         'views/header',
         'jquery',
         'underscore',
         'backbone',
-        'hbs!templates/shot'
+        'hbs!templates/shot',
+        'collections/settings'
     ],
-    function(Router, Shots, Settings, Grid, Header, $, _, Backbone, template) {
+    function(Router, Shots, Settings, SettingsView, GridView, HeaderView, $, _, Backbone, template) {
 
         var Inspirabbble = Backbone.View.extend({
 
@@ -25,10 +27,10 @@ define([
              * Initialize the app.
              */
             initialize: function() {
-                this.$header = new Header({
+                this.$header = new HeaderView({
                     el: '#header'
                 });
-                this.$grid = new Grid({
+                this.$grid = new GridView({
                     el: '#grid'
                 });
                 this.$grid.el.css('padding-top', this.$header.$('.header').css('height'));
@@ -63,7 +65,7 @@ define([
              */
             refresh: function(callback) {
 
-                var max = Math.min(this.estimateMaxShots(), +Settings.model.get('maxShotsPerRequest'));
+                var max = Math.min(this.estimateMaxShots(), Settings.value('max_shots_per_request'));
 
                 // Get shots.
                 this.$dribbble.fetchShotsByList('everyone', 1, max, {
@@ -97,8 +99,7 @@ define([
                     this.refresh(function() {
                         this.scheduleRefresh();
                     }.bind(this));
-                    // }.bind(this), +Settings.model.get('refreshInterval'));
-                }.bind(this), 10 * 1000);
+                }.bind(this), Settings.value('refresh_interval'));
             },
 
             /**
@@ -115,7 +116,7 @@ define([
                         this.$grid.add(template({
                             shot: shot.toJSON(),
                             options: {
-                                hd: !!Settings.model.get('hd')
+                                hd: false
                             }
                         }));
                     }.bind(this));
@@ -161,7 +162,7 @@ define([
                     }.bind(this), 100);
                 }.bind(this));
 
-                this.listenTo(Settings, 'hide', function() {
+                this.listenTo(SettingsView, 'hide', function() {
                     Router.navigate('/');
                 });
             },
@@ -172,11 +173,11 @@ define([
             setupRoutes: function() {
 
                 Router.on('route:home', function() {
-                    Settings.hide();
+                    SettingsView.hide();
                 });
 
                 Router.on('route:settings', function() {
-                    Settings.show();
+                    SettingsView.show();
                 });
 
             }

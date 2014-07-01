@@ -5,10 +5,10 @@ define([
     'underscore',
     'backbone',
     'views/dialog',
-    'models/settings',
+    'collections/settings',
     'hbs!templates/settings',
     'templates/helpers/form'
-], function($, _, Backbone, Dialog, model, template) {
+], function($, _, Backbone, Dialog, settings, template) {
 
     var Settings = Backbone.View.extend({
 
@@ -18,7 +18,6 @@ define([
 
         initialize: function() {
             this.el = $(this.el);
-            this.model = model;
             this.render();
             this.listenTo(this.dialog, 'hide', this.hide);
         },
@@ -26,7 +25,7 @@ define([
         render: function() {
             this.dialog = new Dialog({
                 title: 'Settings',
-                content: this.template(_.toArray(this.model.getSchema()))
+                content: this.template(_.toArray(settings.schema()))
             });
             this.hide();
         },
