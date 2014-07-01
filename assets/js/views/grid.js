@@ -6,12 +6,12 @@
 
 define(
     [
-        'models/settings',
+        'collections/settings',
         'hbs!templates/grid',
         'jquery',
         'backbone',
         'imagesloaded'
-    ], function(Settings, template, $, Backbone) {
+    ], function(settings, template, $, Backbone) {
 
         var events = {
             complete: 'complete'
@@ -22,7 +22,7 @@ define(
             template: template,
 
             events: {
-                'touchstart': 'touchstatHandler',
+                'touchstart': 'touchstartHandler',
                 'mousewheel': 'mousewheelHandler',
                 'DOMMouseScroll': 'domMouseScrollHandler'
             },
@@ -148,7 +148,7 @@ define(
              * Refresh arrows visibility state.
              */
             refresh: function() {
-                if (Settings.get('gridControls')) {
+                if (settings.value('grid_controls')) {
                     var top = parseInt(this.$grid.css('top'), 10);
                     if (top === 0) {
                         this.$header.hide();
@@ -211,7 +211,7 @@ define(
                 }
             },
 
-            touchstatHandler: function() {
+            touchstartHandler: function() {
                 if (!this.touched) {
                     this.el.css('height', 'auto');
                     this.$wrapper.css('height', 'auto');

@@ -1,0 +1,19 @@
+.settings {
+
+    .form-row {
+        @include clearfix;
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        float: left;
+        width: 200px;
+    }
+
+    input {
+        float: left;
+        width: 80px;
+    }
+    
+}

@@ -9,11 +9,12 @@ define([
     'hbs!templates/input'
 ], function(Handlebars, inputTemplate) {
 
-    Handlebars.registerHelper('form', function(options) {
-        if (this.type === 'text' || this.type === 'checkbox') {
-            return new Handlebars.SafeString(inputTemplate(this));
+    Handlebars.registerHelper('form', function() {
+        if (this.type === 'checkbox') {
+            this.checkbox = true;
+            this.checked = !!this.value;
         }
-        return options.fn(this);
+        return new Handlebars.SafeString(inputTemplate(this));
     });
 
 });
