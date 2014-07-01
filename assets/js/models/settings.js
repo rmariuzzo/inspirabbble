@@ -42,11 +42,11 @@ define([
             label: 'Number of columns'
         },
         hd: {
-            type: 'text',
+            type: 'checkbox',
             label: 'HD shots?'
         },
         gridControls: {
-            type: 'text',
+            type: 'checkbox',
             label: 'Show controls?'
         }
     };

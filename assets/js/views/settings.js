@@ -25,7 +25,7 @@ define([
 
         render: function() {
             this.dialog = new Dialog({
-                title: 'Setttings',
+                title: 'Settings',
                 content: this.template(_.toArray(this.model.getSchema()))
             });
             this.hide();
