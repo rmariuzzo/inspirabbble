@@ -34,6 +34,11 @@ define([
          */
         view: null,
 
+        /**
+         * The reference of content wrapper inside the dialog.
+         */
+        content: $(),
+
         data: {
 
             /**
@@ -80,6 +85,8 @@ define([
                 this.view.hide();
                 // Append the rendered view into the DOM.
                 this.el.append(this.view);
+                // Save a reference to the content.
+                this.content = this.view.find('.dialog-content');
             }
         },
 

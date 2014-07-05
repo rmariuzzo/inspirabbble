@@ -15,5 +15,29 @@
         float: left;
         width: 80px;
     }
+
+    .settings-buttons {
+        @include clearfix;
+        text-align: center;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: #ddd solid 1px;
+    }
+
+    .settings-save,
+    .settings-cancel {
+        @include inline-block;
+        @include border-radius(5px);
+        padding: 10px 20px;
+        margin: 0 10px;
+        background-color: #39C082;
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .settings-cancel {
+        background-color: #DE5555;
+    }
     
 }

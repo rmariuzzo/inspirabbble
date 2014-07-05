@@ -1,7 +1,7 @@
 <div class="form-row">
     <label for="{{ id }}">{{ label }}</label>
     {{#if checkbox}}
-        <input type="{{ type }}" name="{{ id }}" value="x" {{#if checked}}checked{{/if}}>
+        <input type="{{ type }}" name="{{ id }}" value="✓" {{#if checked}}checked{{/if}}>
     {{else}}
         <input type="{{ type }}" name="{{ id }}" value="{{ value }}">
     {{/if}}
