@@ -38,7 +38,7 @@
 
     .grid {
         $col-width: 220px;
-        @include clearfix();
+        @include clearfix;
         @include transition-property(top);
         @include transition-duration(0.4s);
         position: relative;
