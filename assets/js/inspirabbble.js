@@ -6,7 +6,7 @@
 
 define([
         'router',
-        'collections/shots',
+        'collections/dummy/shots',
         'collections/settings',
         'views/settings',
         'views/grid',
@@ -14,8 +14,7 @@ define([
         'jquery',
         'underscore',
         'backbone',
-        'hbs!templates/shot',
-        'collections/settings'
+        'hbs!templates/shot'
     ],
     function(Router, Shots, Settings, SettingsView, GridView, HeaderView, $, _, Backbone, template) {
 
