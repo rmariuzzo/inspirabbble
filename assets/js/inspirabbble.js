@@ -122,7 +122,6 @@ define([
 
                     // Allow post-render invocation when grid completes.
                     this.$grid.on('complete', function() {
-                        console.log('completed');
                         callback.call(this);
                     }.bind(this));
                 } else {

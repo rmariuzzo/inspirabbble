@@ -13,10 +13,6 @@ define(
         'imagesloaded'
     ], function(settings, template, $, Backbone) {
 
-        var events = {
-            complete: 'complete'
-        };
-
         var Grid = Backbone.View.extend({
 
             template: template,
@@ -65,7 +61,7 @@ define(
                     this.prepend(html);
                     --this.$queue;
                     if (!this.$queue) {
-                        Backbone.trigger(events.complete);
+                        this.trigger('complete');
                     }
                 }.bind(this));
             },
