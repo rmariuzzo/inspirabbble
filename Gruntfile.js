@@ -138,13 +138,23 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            resources: {
+            vendorfont: {
                 files: [{
                     expand: true,
                     src: 'assets/bower_components/dripicons/fonts/**',
                     dest: 'assets/fonts/',
                     flatten: true,
                     filter: 'isFile'
+                }]
+            },
+            vendorcss: {
+                files: [{
+                    expand: true,
+                    src: 'assets/bower_components/**/*.css',
+                    dest: 'tmp/',
+                    rename: function(dest, src) {
+                        return dest + src.replace(/css$/, 'scss');
+                    }
                 }]
             }
         },
@@ -164,6 +174,12 @@ module.exports = function(grunt) {
                     'package.json'
                 ]
             }
+        },
+
+        clean: {
+            all: {
+                src: ['tmp']
+            }
         }
 
     });
@@ -175,8 +191,8 @@ module.exports = function(grunt) {
     // Validation tasks.
     grunt.registerTask('validate', 'Validate source files.', ['jshint', 'jsonlint', 'requirejs', 'sass:validate']);
     // Build tasks.
-    grunt.registerTask('build:dev', 'Build the development version.', ['copy:resources', 'targethtml:dev', 'sass:dev']);
-    grunt.registerTask('build:prod', 'Build the production version.', ['jshint', 'requirejs', 'sass:prod', 'copy:resources', 'targethtml:prod', 'imagemin']);
+    grunt.registerTask('build:dev', 'Build the development version.', ['clean', 'copy', 'targethtml:dev', 'sass:dev']);
+    grunt.registerTask('build:prod', 'Build the production version.', ['clean', 'copy', 'jshint', 'requirejs', 'sass:prod', 'targethtml:prod', 'imagemin']);
     grunt.registerTask('build', ['build:prod']);
     // Serve tasks.
     grunt.registerTask('serve:dev', 'Serve the application in development mode.', ['build:dev', 'concurrent:serve']);

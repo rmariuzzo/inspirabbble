@@ -11,6 +11,10 @@
         width: 100%;
         height: auto;
     }
+
+    a {
+        @include inline-block;
+    }
 }
 
 @include keyframes(shot-in) {

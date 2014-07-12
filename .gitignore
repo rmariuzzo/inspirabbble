@@ -2,3 +2,4 @@ node_modules/
 assets/bower_components/
 assets/dist/
 assets/css/
+tmp/

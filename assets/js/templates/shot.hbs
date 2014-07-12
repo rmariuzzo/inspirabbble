@@ -1,7 +1,9 @@
 <div class="shot animated rollIn">
-    {{#if options.hd}}
-    <img src="{{shot.imageUrl}}" alt="{{shot.imageUrl}}">
-    {{else}}
-    <img src="{{shot.imageTeaserUrl}}" alt="{{shot.imageTeaserUrl}}">
-    {{/if}}
+    <a href="{{shot.imageUrl}}">
+        {{#if options.hd}}
+        <img src="{{shot.imageUrl}}" alt="{{shot.imageUrl}}">
+        {{else}}
+        <img src="{{shot.imageTeaserUrl}}" alt="{{shot.imageTeaserUrl}}">
+        {{/if}}
+    </a>
 </div>

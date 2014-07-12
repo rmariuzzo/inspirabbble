@@ -10,7 +10,8 @@ define(
         'hbs!templates/grid',
         'jquery',
         'backbone',
-        'imagesloaded'
+        'imagesloaded',
+        'jquery.magnific-popup'
     ], function(settings, template, $, Backbone) {
 
         var Grid = Backbone.View.extend({
@@ -20,7 +21,8 @@ define(
             events: {
                 'touchstart': 'touchstartHandler',
                 'mousewheel': 'mousewheelHandler',
-                'DOMMouseScroll': 'domMouseScrollHandler'
+                'DOMMouseScroll': 'domMouseScrollHandler',
+                'click .shot a': 'clickShotHandler'
             },
 
             touched: false,
@@ -216,6 +218,25 @@ define(
                     this.$wrapper.css('height', 'auto');
                 }
                 this.touched = true;
+            },
+
+            clickShotHandler: function(event) {
+                event.preventDefault();
+                $.magnificPopup.open({
+                    items: {
+                        src: event.currentTarget.href
+                    },
+                    type: 'image',
+                    mainClass: 'mfp-with-zoom',
+                    zoom: {
+                        enabled: true,
+                        duration: 300,
+                        easing: 'ease-in-out',
+                        opener: function() {
+                            return $(event.currentTarget);
+                        }
+                    }
+                });
             }
 
         });
