@@ -57,12 +57,15 @@ define(
              */
             add: function(html) {
                 this.$queue++;
-                $(html).imagesLoaded(function() {
-                    this.prepend(html);
+                var when = $(html).imagesLoaded(function() {
                     --this.$queue;
                     if (!this.$queue) {
                         this.trigger('complete');
                     }
+                }.bind(this));
+
+                when.done(function() {
+                    this.prepend(html);
                 }.bind(this));
             },
 

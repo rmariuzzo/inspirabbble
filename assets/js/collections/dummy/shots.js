@@ -37,6 +37,17 @@ define([
                     image400Url: url
                 });
             }
+
+            // Make a shot to have wrong url
+            var shot = this.at(_.random(this.length - 1));
+            var badUrl = 'http://placehold.it/400x300/intentional-error';
+            shot.set({
+                url: badUrl,
+                imageUrl: badUrl,
+                imageTeaserUrl: badUrl,
+                image400Url: badUrl
+            });
+
             options.success.call(this, this);
         },
 
