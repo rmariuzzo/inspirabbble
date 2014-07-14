@@ -227,7 +227,6 @@ define(
                         src: event.currentTarget.href
                     },
                     type: 'image',
-                    mainClass: 'mfp-with-zoom',
                     zoom: {
                         enabled: true,
                         duration: 300,
