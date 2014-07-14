@@ -16,8 +16,10 @@ define(
 
         var Grid = Backbone.View.extend({
 
+            /** The template used by this grid. */
             template: template,
 
+            /** Hash of events. */
             events: {
                 'touchstart': 'touchstartHandler',
                 'mousewheel': 'mousewheelHandler',
@@ -25,10 +27,13 @@ define(
                 'click .shot a': 'clickShotHandler'
             },
 
+            /** Indicates if the grid was touched. */
             touched: false,
 
             /**
              * Initialize the grid view.
+             *
+             * @return void
              */
             initialize: function() {
                 this.el = $(this.el);
@@ -41,6 +46,8 @@ define(
 
             /**
              * Render this view.
+             *
+             * @return void
              */
             render: function() {
                 this.el.html(this.template());
@@ -55,7 +62,8 @@ define(
             /**
              * Add an element to the grid.
              *
-             * @param html mixed The element to add.
+             * @param object html The element to add.
+             * @return void
              */
             add: function(html) {
                 this.$queue++;
@@ -73,6 +81,8 @@ define(
 
             /**
              * Return all columns available.
+             *
+             * @return Array An array of available columns.
              */
             cols: function() {
                 return this.el.find('.col:visible');
@@ -80,6 +90,8 @@ define(
 
             /**
              * Resize the view.
+             *
+             * @return void
              */
             resize: function() {
                 if (this.touched) {
@@ -92,7 +104,9 @@ define(
             },
 
             /**
-             * Prepend an element to the view.
+             * Prepends an element to the view.
+             *
+             * @return void
              */
             prepend: function(html) {
                 var cols = this.cols();
@@ -106,6 +120,8 @@ define(
 
             /**
              * Move the grid to make the next row visible.
+             *
+             * @return void
              */
             next: function() {
                 var rowHeight = this.rowHeight();
@@ -119,6 +135,8 @@ define(
 
             /**
              * Move the grid to make the previous row visible.
+             *
+             * @return void
              */
             prev: function() {
                 var rowHeight = this.rowHeight();
@@ -136,6 +154,8 @@ define(
 
             /**
              * Return the virtual row height.
+             *
+             * @return number The virtual row height.
              */
             rowHeight: function() {
                 var children = this.cols().first().children();
@@ -147,6 +167,8 @@ define(
 
             /**
              * Refresh arrows visibility state.
+             *
+             * @return void
              */
             refresh: function() {
                 if (settings.value('grid_controls')) {
@@ -167,6 +189,8 @@ define(
 
             /**
              * Bind events.
+             *
+             * @return void
              */
             bindEvents: function() {
                 this.listenTo(this.$prev, 'click', function(event) {
@@ -180,6 +204,11 @@ define(
                 }.bind(this));
             },
 
+            /**
+             * Start internal timers.
+             *
+             * @return void
+             */
             startTimers: function() {
                 setInterval(function() {
                     this.refresh();
@@ -188,6 +217,12 @@ define(
 
             // Event handlers //
 
+            /**
+             * Handle the mouse wheel event.
+             *
+             * @param event object The event object.
+             * @return void
+             */
             mousewheelHandler: function(event) {
                 if (this.touched) {
                     return; // Nothing to do here.
@@ -200,6 +235,12 @@ define(
                 }
             },
 
+            /**
+             * Handle the mouse scroll event.
+             *
+             * @param event object The event object.
+             * @return void
+             */
             domMouseScrollHandler: function(event) {
                 if (this.touched) {
                     return; // Nothing to do here.
@@ -212,6 +253,11 @@ define(
                 }
             },
 
+            /**
+             * Handle the touch start event.
+             *
+             * @return void
+             */
             touchstartHandler: function() {
                 if (!this.touched) {
                     this.el.css('height', 'auto');
@@ -220,6 +266,12 @@ define(
                 this.touched = true;
             },
 
+            /**
+             * Handle the click event on a shot.
+             *
+             * @param event object The event object.
+             * @return void
+             */
             clickShotHandler: function(event) {
                 event.preventDefault();
                 $.magnificPopup.open({
