@@ -6,7 +6,7 @@
 
 define([
         'router',
-        'collections/dummy/shots',
+        'collections/shots',
         'collections/settings',
         'views/settings',
         'views/grid',
@@ -112,10 +112,12 @@ define([
 
                     // Add new shots to grid.
                     this.$newShots.forEach(function(shot) {
+                        shot = shot.toJSON();
+                        shot.imageUrl = shot.imageUrl || shot.image400Url || shot.imageTeaserUrl;
                         this.$grid.add(template({
-                            shot: shot.toJSON(),
+                            shot: shot,
                             options: {
-                                hd: false
+                                hd: Settings.value('hd')
                             }
                         }));
                     }.bind(this));
