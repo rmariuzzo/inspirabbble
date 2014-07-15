@@ -7,8 +7,10 @@
 define([
     'jquery',
     'backbone',
-    'hbs!templates/overlay'
-], function($, Backbone, template) {
+    'utils/transitionend',
+    'hbs!templates/overlay',
+    'utils/jquery.reflow'
+], function($, Backbone, transitionend, template) {
 
     var Overlay = Backbone.View.extend({
 
@@ -26,7 +28,7 @@ define([
          * Events.
          */
         events: {
-            'click .overlay': 'click'
+            'click .overlay': 'handleClick'
         },
 
         /**
@@ -34,8 +36,8 @@ define([
          */
         initialize: function() {
             this.el = $(this.el);
-            this.hide();
             this.render();
+            this.hide(true);
         },
 
         /**
@@ -51,15 +53,22 @@ define([
          * Show the overlay.
          */
         show: function() {
-            this.template.show();
+            this.template.show().reflow().removeClass('hidden');
             this.delegateEvents();
         },
 
         /**
          * Hide the overlay.
          */
-        hide: function() {
-            this.template.hide();
+        hide: function(immediate) {
+            if (immediate) {
+                this.template.hide();
+            } else {
+                this.template.one(transitionend, function() {
+                    this.template.hide();
+                }.bind(this));
+            }
+            this.template.addClass('hidden');
             this.undelegateEvents();
         },
 
@@ -68,7 +77,7 @@ define([
         /**
          * Handle click on overlay.
          */
-        click: function() {
+        handleClick: function() {
             this.trigger('click');
         }
 

@@ -98,9 +98,7 @@ define([
                 return; // Nothing to do here.
             }
             this.overlay.show();
-            this.view
-                .removeClass('hidden')
-                .show();
+            this.view.removeClass('hidden').show();
             this.delegateEvents();
         },
 
@@ -112,14 +110,14 @@ define([
             if (this.isHidden()) {
                 return; // Nothing to do here.
             }
-            // Hide the overlay.
+            
+            // Hide the overlay & dialog.
             this.overlay.hide();
-            // Hide the dialog with animation.
-            this.view
-                .one(animationend, function() {
-                    this.view.hide();
-                }.bind(this))
-                .addClass('hidden');
+            this.view.one(animationend, function() {
+                this.view.hide();
+            }.bind(this));
+            this.view.addClass('hidden');
+
             // Undelegate and trigger event.
             this.undelegateEvents();
             this.trigger('hide');
