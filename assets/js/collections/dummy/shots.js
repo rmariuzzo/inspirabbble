@@ -21,6 +21,7 @@ define([
          * @params options object The fetch options.
          */
         fetch: function(options) {
+            var lipsum = 'Praesent rutrum urna a sem feugiat rutrum. Mauris pulvinar tortor tortor, ut laoreet tortor cursus quis.'.split(' ');
             /* jshint -W106 */
             for (var i = 0; i < options.data.per_page; i++) {
                 /* jshint +W106 */
@@ -28,7 +29,7 @@ define([
                 this.add({
                     id: _.uniqueId(),
                     title: _.shuffle(['Awesome', 'Magic', 'In', 'Dummy', 'Supreme']).join(' '),
-                    description: 'Praesent rutrum urna a sem feugiat rutrum. Mauris pulvinar tortor tortor, ut laoreet tortor cursus quis.',
+                    description: _.sample(lipsum, _.random(lipsum.length)).join(' '),
                     width: 400,
                     height: 300,
                     url: url,

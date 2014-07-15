@@ -1,9 +1,15 @@
 <div class="shot">
     <a href="{{shot.imageUrl}}">
-        {{#if options.hd}}
-        <img src="{{shot.imageUrl}}" alt="{{shot.imageUrl}}">
-        {{else}}
-        <img src="{{shot.imageTeaserUrl}}" alt="{{shot.imageTeaserUrl}}">
-        {{/if}}
+        <figure>
+            {{#if options.hd}}
+            <img src="{{shot.imageUrl}}" alt="{{shot.imageUrl}}">
+            {{else}}
+            <img src="{{shot.imageTeaserUrl}}" alt="{{shot.imageTeaserUrl}}">
+            {{/if}}
+            <figcaption>
+                <h3>{{shot.title}}</h3>
+                <p>{{shot.description}}</p>
+            </figcaption>
+        </figure>
     </a>
 </div>

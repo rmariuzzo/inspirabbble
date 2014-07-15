@@ -4,6 +4,8 @@
     border: rgba(0, 0, 0, 0) solid 1px;
     margin: 20px 10px;
     background-color: #fff;
+    position: relative;
+    overflow: hidden;
 
     img {
         @include box-shadow(0 0 10px rgba(0, 0, 0, 0.2));
@@ -16,13 +18,42 @@
         @include inline-block;
         width: 100%;
     }
+
+    figure figcaption {
+        background-color: rgba(#000, .65);
+        position: absolute;
+        padding: 0 20px;
+        height: 100%;
+        opacity: 0;
+        bottom: -100%;
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease-in);
+    }
+
+    figure:hover figcaption {
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease-out);
+        opacity: 1;
+        bottom: 0;
+    }
+
+    h3 {
+        color: #fff;
+        margin: 20px 0;
+    }
+
+    p {
+        color: #fff;
+        margin: 20px 0;
+        font-size: 13px;
+    }
 }
 
 @include keyframes(shot-in) {
-    0% {
+    from {
         max-height: 0;
     }
-    100% {
+    to {
         max-height: 1000px;
     }
 }
