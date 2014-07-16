@@ -20,14 +20,15 @@
     }
 
     figure figcaption {
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease-in);
         background-color: rgba(#000, .65);
         position: absolute;
         padding: 0 20px;
         height: 100%;
+        width: 100%;
         opacity: 0;
         bottom: -100%;
-        @include transition-duration(.3s);
-        @include transition-timing-function(ease-in);
     }
 
     figure:hover figcaption {
