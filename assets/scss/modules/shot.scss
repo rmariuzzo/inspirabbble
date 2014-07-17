@@ -2,21 +2,62 @@
     @include animation-name(shot-in);
     @include animation-duration(2s);
     border: rgba(0, 0, 0, 0) solid 1px;
-    margin: 10px 10px 20px 10px;
+    margin: 20px 10px;
     background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
     img {
         @include box-shadow(0 0 10px rgba(0, 0, 0, 0.2));
         display: block;
         width: 100%;
         height: auto;
     }
+
+    figure figcaption {
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease-in);
+        background-color: rgba(#000, .65);
+        position: absolute;
+        padding: 0 20px;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        top: 100%;
+    }
+
+    figure:hover figcaption {
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease-out);
+        opacity: 1;
+        top: 0;
+    }
+
+    h3 {
+        color: #fff;
+        margin: 20px 0;
+    }
+
+    p {
+        @include text-shadow(#000 0 1px 1px);
+        color: #fff;
+        margin: 20px 0;
+        font-size: 13px;
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    }
 }
 
 @include keyframes(shot-in) {
-    0% {
+    from {
         max-height: 0;
     }
-    100% {
+    to {
         max-height: 1000px;
     }
 }

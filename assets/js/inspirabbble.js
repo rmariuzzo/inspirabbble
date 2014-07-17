@@ -14,8 +14,7 @@ define([
         'jquery',
         'underscore',
         'backbone',
-        'hbs!templates/shot',
-        'collections/settings'
+        'hbs!templates/shot'
     ],
     function(Router, Shots, Settings, SettingsView, GridView, HeaderView, $, _, Backbone, template) {
 
@@ -113,17 +112,18 @@ define([
 
                     // Add new shots to grid.
                     this.$newShots.forEach(function(shot) {
+                        shot = shot.toJSON();
+                        shot.imageUrl = shot.imageUrl || shot.image400Url || shot.imageTeaserUrl;
                         this.$grid.add(template({
-                            shot: shot.toJSON(),
+                            shot: shot,
                             options: {
-                                hd: false
+                                hd: Settings.value('hd')
                             }
                         }));
                     }.bind(this));
 
                     // Allow post-render invocation when grid completes.
                     this.$grid.on('complete', function() {
-                        console.log('completed');
                         callback.call(this);
                     }.bind(this));
                 } else {

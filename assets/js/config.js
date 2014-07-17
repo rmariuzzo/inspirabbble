@@ -17,7 +17,8 @@ require.config({
         'imagesloaded': '../bower_components/imagesloaded/imagesloaded',
         'eventEmitter/EventEmitter': '../bower_components/eventEmitter/EventEmitter',
         'eventie/eventie': '../bower_components/eventie/eventie',
-        'modernizr': '../bower_components/modernizr/modernizr'
+        'modernizr': '../bower_components/modernizr/modernizr',
+        'jquery.magnific-popup': '../bower_components/magnific-popup/dist/jquery.magnific-popup'
     },
     shim: {
         'imagesloaded': {
@@ -34,6 +35,9 @@ require.config({
             exports: '_'
         },
         'jquery.nicescroll': {
+            deps: ['jquery']
+        },
+        'jquery.magnific-popup': {
             deps: ['jquery']
         },
         'modernizr': {

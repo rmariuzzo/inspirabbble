@@ -34,6 +34,11 @@ define([
          */
         view: null,
 
+        /**
+         * The reference of content wrapper inside the dialog.
+         */
+        content: $(),
+
         data: {
 
             /**
@@ -80,6 +85,8 @@ define([
                 this.view.hide();
                 // Append the rendered view into the DOM.
                 this.el.append(this.view);
+                // Save a reference to the content.
+                this.content = this.view.find('.dialog-content');
             }
         },
 
@@ -91,9 +98,7 @@ define([
                 return; // Nothing to do here.
             }
             this.overlay.show();
-            this.view
-                .removeClass('hidden')
-                .show();
+            this.view.removeClass('hidden').show();
             this.delegateEvents();
         },
 
@@ -105,14 +110,14 @@ define([
             if (this.isHidden()) {
                 return; // Nothing to do here.
             }
-            // Hide the overlay.
+            
+            // Hide the overlay & dialog.
             this.overlay.hide();
-            // Hide the dialog with animation.
-            this.view
-                .one(animationend, function() {
-                    this.view.hide();
-                }.bind(this))
-                .addClass('hidden');
+            this.view.one(animationend, function() {
+                this.view.hide();
+            }.bind(this));
+            this.view.addClass('hidden');
+
             // Undelegate and trigger event.
             this.undelegateEvents();
             this.trigger('hide');
