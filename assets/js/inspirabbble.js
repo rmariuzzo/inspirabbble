@@ -6,7 +6,7 @@
 
 define([
         'router',
-        'collections/dummy/shots',
+        'collections/shots',
         'collections/settings',
         'views/settings',
         'views/grid',

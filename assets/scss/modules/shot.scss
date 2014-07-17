@@ -6,17 +6,13 @@
     background-color: #fff;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 
     img {
         @include box-shadow(0 0 10px rgba(0, 0, 0, 0.2));
         display: block;
         width: 100%;
         height: auto;
-    }
-
-    a {
-        @include inline-block;
-        width: 100%;
     }
 
     figure figcaption {
@@ -28,14 +24,14 @@
         height: 100%;
         width: 100%;
         opacity: 0;
-        bottom: -100%;
+        top: 100%;
     }
 
     figure:hover figcaption {
         @include transition-duration(.3s);
         @include transition-timing-function(ease-out);
         opacity: 1;
-        bottom: 0;
+        top: 0;
     }
 
     h3 {
@@ -44,9 +40,16 @@
     }
 
     p {
+        @include text-shadow(#000 0 1px 1px);
         color: #fff;
         margin: 20px 0;
         font-size: 13px;
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
     }
 }
 

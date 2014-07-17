@@ -1,15 +1,13 @@
-<div class="shot">
-    <a href="{{shot.imageUrl}}">
-        <figure>
-            {{#if options.hd}}
-            <img src="{{shot.imageUrl}}" alt="{{shot.imageUrl}}">
-            {{else}}
-            <img src="{{shot.imageTeaserUrl}}" alt="{{shot.imageTeaserUrl}}">
-            {{/if}}
-            <figcaption>
-                <h3>{{shot.title}}</h3>
-                <p>{{shot.description}}</p>
-            </figcaption>
-        </figure>
-    </a>
+<div class="shot" data-id="{{shot.id}}" data-image-url="{{shot.imageUrl}}">
+    <figure>
+        {{#if options.hd}}
+        <img src="{{shot.imageUrl}}" alt="{{shot.imageUrl}}">
+        {{else}}
+        <img src="{{shot.imageTeaserUrl}}" alt="{{shot.imageTeaserUrl}}">
+        {{/if}}
+        <figcaption>
+            <h3>{{shot.title}}</h3>
+            <p>{{{shot.description}}}</p>
+        </figcaption>
+    </figure>
 </div>

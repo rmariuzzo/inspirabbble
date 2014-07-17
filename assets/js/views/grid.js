@@ -24,7 +24,7 @@ define(
                 'touchstart': 'touchstartHandler',
                 'mousewheel': 'mousewheelHandler',
                 'DOMMouseScroll': 'domMouseScrollHandler',
-                'click .shot a': 'clickShotHandler'
+                'click .shot': 'clickShotHandler'
             },
 
             /** Indicates if the grid was touched. */
@@ -276,7 +276,7 @@ define(
                 event.preventDefault();
                 $.magnificPopup.open({
                     items: {
-                        src: event.currentTarget.href
+                        src: event.currentTarget.getAttribute('data-image-url')
                     },
                     type: 'image',
                     zoom: {
