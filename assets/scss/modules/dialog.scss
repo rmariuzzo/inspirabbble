@@ -3,10 +3,10 @@
     @include fadeInDown(.3s, 0, ease-in, both, hidden);
     @include border-radius(3px);
     @include box-shadow(0 0 8px 4px rgba(#000, .3));
-    width: 40%;
+    width: 340px;
     position: absolute;
     left: 50%;
-    margin-left: -20%;
+    margin-left: -170px;
     top: 100px;
     background-color: #fff;
     z-index: 1500;

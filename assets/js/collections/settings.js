@@ -12,40 +12,32 @@ define([
 ], function(Setting, _, Backbone) {
 
     var schema = [{
-        id: 'max_shots_per_request',
-        value: 30,
-        type: 'text',
-        label: 'Max shots per request',
-        rules: ['required', 'numeric', 'min:1', 'max:30']
-    }, {
         id: 'refresh_interval',
-        value: 5000,
-        type: 'text',
+        value: 30 * 1000,
+        type: 'select',
+        options: [{
+            text: '10s',
+            value: 10 * 1000
+        }, {
+            text: '30s',
+            value: 30 * 1000
+        }, {
+            text: '1m',
+            value: 60 * 1000
+        }, {
+            text: '5m',
+            value: 60 * 1000 * 5
+        }, {
+            text: '10m',
+            value: 60 * 1000 * 10
+        }],
         label: 'Refresh Interval',
         rules: ['required', 'numeric', 'min:1000', 'max:1800000']
-    }, {
-        id: 'max_shots',
-        value: 200,
-        type: 'text',
-        label: 'Max shots',
-        rules: ['required', 'numeric', 'min:1']
-    }, {
-        id: 'grid_columns',
-        value: 6,
-        type: 'text',
-        label: 'Number of columns',
-        rules: ['required', 'numeric', 'min:1']
     }, {
         id: 'hd',
         value: true,
         type: 'checkbox',
-        label: 'HD shots?',
-        rules: ['required', 'boolean']
-    }, {
-        id: 'grid_controls',
-        value: false,
-        type: 'checkbox',
-        label: 'Show controls?',
+        label: 'HD quality?',
         rules: ['required', 'boolean']
     }];
 
@@ -67,9 +59,17 @@ define([
                     }
                 }.bind(this)
             });
-            // Save settings.
-            this.each(function(model) {
-                model.save();
+            // Validate against schema.
+            if (!this.validateSchema()) {
+                var length = this.models.length;
+                for (var i = 0; i < length; i++) {
+                    this.at(0).destroy();
+                }
+                this.loadDefault();
+            }
+            // Save all settings.
+            this.each(function(setting) {
+                setting.save();
             });
         },
 
@@ -81,9 +81,10 @@ define([
         schema: function() {
             var settings = this.toJSON();
             for (var i = 0; i < settings.length; i++) {
-                settings[i] = _.extend(_.findWhere(schema, {
+                var s = _.findWhere(schema, {
                     id: settings[i].id
-                }), settings[i]);
+                });
+                settings[i] = _.extend(s, settings[i]);
             }
             return settings;
         },
@@ -102,6 +103,29 @@ define([
                 throw new Error('Undefined setting: ' + id);
             }
             return setting.type === 'checkbox' ? setting.value : +setting.value;
+        },
+
+        /**
+         * Validate loaded settings against schema.
+         *
+         * @return boolean True if loaded settings are valid for the current schema.
+         */
+        validateSchema: function() {
+            if (schema.length !== this.length) {
+                return false;
+            }
+            return schema.every(function(s) {
+                return this.get(s.id);
+            }.bind(this));
+        },
+
+        /**
+         * Load default settings values.
+         *
+         * @return void.
+         */
+        loadDefault: function() {
+            this.reset(schema);
         }
 
     });

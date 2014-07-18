@@ -41,7 +41,6 @@ define(
                 this.$queue = 0;
                 this.resize();
                 this.bindEvents();
-                this.startTimers();
             },
 
             /**
@@ -166,28 +165,6 @@ define(
             },
 
             /**
-             * Refresh arrows visibility state.
-             *
-             * @return void
-             */
-            refresh: function() {
-                if (settings.value('grid_controls')) {
-                    var top = parseInt(this.$grid.css('top'), 10);
-                    if (top === 0) {
-                        this.$header.hide();
-                    } else {
-                        this.$header.show();
-                    }
-                    var remaining = this.$grid.height() - this.el.height() + top;
-                    if (remaining > 0) {
-                        this.$footer.show();
-                    } else {
-                        this.$footer.hide();
-                    }
-                }
-            },
-
-            /**
              * Bind events.
              *
              * @return void
@@ -202,17 +179,6 @@ define(
                     event.preventDefault();
                     this.next();
                 }.bind(this));
-            },
-
-            /**
-             * Start internal timers.
-             *
-             * @return void
-             */
-            startTimers: function() {
-                setInterval(function() {
-                    this.refresh();
-                }.bind(this), 300);
             },
 
             // Event handlers //

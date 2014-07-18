@@ -64,7 +64,7 @@ define([
              */
             refresh: function(callback) {
 
-                var max = Math.min(this.estimateMaxShots(), Settings.value('max_shots_per_request'));
+                var max = this.estimateMaxShots();
 
                 // Get shots.
                 this.$dribbble.fetchShotsByList('everyone', 1, max, {
