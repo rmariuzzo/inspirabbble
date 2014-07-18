@@ -11,16 +11,30 @@
         width: 200px;
     }
 
-    input {
+    input[type=text],
+    select {
+        @include box-shadow(rgba(#000, .35) 0 2px 1px -1px);
         float: left;
         width: 80px;
+        padding: 5px 10px;
+        margin: 0 0 1px 0;
+        border: 0;
+        background-color: #eee;
+
+        &:hover {
+            background-color: darken(#eee, 3%);
+        }
+
+        &:focus {
+            background-color: darken(#eee, 6%);
+            outline: 0;
+        }
     }
 
     .settings-buttons {
         @include clearfix;
-        text-align: center;
-        margin-top: 10px;
-        padding-top: 10px;
+        margin-top: 20px;
+        padding: 20px 0 10px 0;
         border-top: #ddd solid 1px;
     }
 
@@ -28,16 +42,31 @@
     .settings-cancel {
         @include inline-block;
         @include border-radius(5px);
+        @include box-shadow(rgba(#000, .65) 0 2px 1px -1px);
         padding: 10px 20px;
-        margin: 0 10px;
-        background-color: #39C082;
         color: #fff;
         font-weight: bold;
         text-decoration: none;
+        text-align: center;
+        width: 46%;
+    }
+
+    .settings-save {
+        float: left;
+        background-color: #39C082;
+
+        &:hover {
+            background-color: darken(#39C082, 3%);
+        }
     }
 
     .settings-cancel {
+        float: right;
         background-color: #DE5555;
+
+        &:hover {
+            background-color: darken(#DE5555, 3%);
+        }
     }
     
 }

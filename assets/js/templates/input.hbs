@@ -1,8 +1,16 @@
 <div class="form-row">
-    <label for="{{ id }}">{{ label }}</label>
-    {{#if checkbox}}
-        <input type="{{ type }}" name="{{ id }}" value="✓" {{#if checked}}checked{{/if}}>
-    {{else}}
-        <input type="{{ type }}" name="{{ id }}" value="{{ value }}">
+    <label for="{{id}}">{{label}}</label>
+    {{#if isCheckbox}}
+        <input type="{{type}}" name="{{id}}" id="{{id}}" value="✓" {{#if checked}}checked{{/if}}>
+    {{/if}}
+    {{#if isSelect}}
+        <select name="{{id}}" id="{{id}}">
+            {{#each options}}
+                <option value="{{value}}" {{#if selected}}selected{{/if}}>{{text}}</option>
+            {{/each}}
+        </select>
+    {{/if}}
+    {{#if isText}}
+        <input type="{{type}}" name="{{id}}" id="{{id}}" value="{{value}}">
     {{/if}}
 </div>
