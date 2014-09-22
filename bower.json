@@ -1,42 +1,42 @@
 {
-  "name": "inspirabbble",
-  "version": "1.0.0",
-  "homepage": "https://mariuzzo.github.io/inspirabbble",
-  "authors": [
-    "Rubens Mariuzzo <rubens@mariuzzo.com>"
-  ],
-  "description": "Inspire yourself with fresh shots from Dribbble",
-  "keywords": [
-    "dribbble",
-    "inspiration"
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "devDependencies": {
-    "almond": "~0.2.9",
-    "requirejs": "~2.1.10",
-    "requirejs-text": "~2.0.10"
-  },
-  "dependencies": {
-    "handlebars": "~1.3.0",
-    "jquery": "~2.1.0",
-    "require-handlebars-plugin": "~0.8.0",
-    "compass-mixins": "~1.0.0",
-    "normalize-scss": "~2.1.3",
-    "imagesloaded": "~3.1.4",
-    "eventEmitter": "~4.2.7",
-    "dripicons": "~1.0.0",
-    "backbone": "~1.1.2",
-    "backbone.localStorage": "~1.1.7",
-    "animate.scss": "https://github.com/jackilyn/animate.scss.git",
-    "modernizr": "~2.8.2",
-    "magnific-popup": "~0.9.9"
-  }
+    "name": "inspirabbble",
+    "version": "1.0.0",
+    "homepage": "https://mariuzzo.github.io/inspirabbble",
+    "authors": [
+        "Rubens Mariuzzo <rubens@mariuzzo.com>"
+    ],
+    "description": "Inspire yourself with fresh shots from Dribbble",
+    "keywords": [
+        "dribbble",
+        "inspiration"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "devDependencies": {
+        "almond": "~0.2.9",
+        "requirejs": "~2.1.10",
+        "requirejs-text": "~2.0.10"
+    },
+    "dependencies": {
+        "handlebars": "~1.3.0",
+        "jquery": "~2.1.0",
+        "require-handlebars-plugin": "~0.8.0",
+        "compass-mixins": "1.0.0",
+        "normalize-scss": "~2.1.3",
+        "imagesloaded": "~3.1.4",
+        "eventEmitter": "~4.2.7",
+        "dripicons": "~1.0.0",
+        "backbone": "~1.1.2",
+        "backbone.localStorage": "~1.1.7",
+        "animate.scss": "https://github.com/jackilyn/animate.scss.git",
+        "modernizr": "~2.8.2",
+        "magnific-popup": "~0.9.9"
+    }
 }
